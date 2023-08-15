@@ -9,7 +9,7 @@ from flask_restful import Resource
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import Swimmer, Team, Event, Time
+from models import Swimmer, Team, Event, Time, User
 
 # Views go here!
 
@@ -17,9 +17,12 @@ from models import Swimmer, Team, Event, Time
 # Get/Post Swimmers
 # Get/Patch/Delete Swimmers by ID
 # Get/Post Teams
-# Get/Patch/Delete Teams
+# Get/Patch/Delete Teams by ID
 # Get Times
 # Get TimesBySwimmerId
+# Get/Patch TimesById
+# Get/Post Users
+# Get/Patch/Delete Users by ID
 
 
 @app.route('/')
@@ -182,10 +185,96 @@ api.add_resource(TimesBySwimmerId, "/times/swimmers/<int:id>")
 
 class TimesById(Resource):
 
-    # This is where you left off
-    # Also you never finished the User model and never reseeded
+    def get(self, id):
+        time = Time.query.filter(Time.id == id).first()
+        if not time:
+            return make_response({"Error" : "Time not found"}, 404)
+        else:
+            return make_response(time.to_dict(only=("id", "time", 
+                "swimmer.name", "event.name")), 200)
+        
+    def patch(self, id):
+       time = Time.query.filter(Time.id == id).first()
+       if not time:
+           return make_response({"Error" : "Time not found"}, 404)
+       else: 
+            data = request.json
+            for attr in data:
+                try:
+                    setattr(time, attr, data[attr])
+                except ValueError as v_error:
+                    return make_response({"errors" : [str(v_error)]}, 400)
+            
+            db.session.commit()
+            return make_response(time.to_dict(only=("id", "time", 
+                "swimmer.name", "event.name")), 200)
 
 api.add_resource(TimesById, "/times/<int:id>")
+
+class Users(Resource):
+
+    def get(self):
+        return make_response([u.to_dict(only=("id", "team_id", "first_name", 
+            "last_name", "username", "password", "team.name", "swimmers.name", )) 
+            for u in User.query.all()])
+    
+    def post(self):
+        data = request.json
+        try:
+            user = User(
+                team_id = data["team_id"],
+                first_name = data["first_name"],
+                last_name = data["last_name"],
+                username = data["username"],
+                password = data["password"],
+            )
+        except ValueError as v_error:
+            return make_response({"Errors" : [str(v_error)]}, 422)
+        
+        db.session.add(user)
+        db.session.commit()
+        return make_response(user.to_dict(only=("id", "team_id", "first_name", 
+            "last_name", "username", "password", "team.name", "swimmers.name",)))
+
+api.add_resource(Users, "/users")
+
+class UsersById(Resource):
+
+    def get(self, id):
+        user = User.query.filter(User.id == id).first()
+        if not user:
+            return make_response({"Error" : "User not found"}, 404)
+        else:
+            return make_response(user.to_dict(only=("id", "team_id", "first_name", 
+            "last_name", "username", "password", "team.name", "swimmers.name",)), 200)
+        
+    def patch(self, id):
+        user = User.query.filter(User.id == id).first()
+        if not user:
+            return make_response({"Error" : "User not found"}, 404)
+        else:
+            data = request.json
+            for attr in data:
+                try:
+                    setattr(user, attr, data[attr])
+                except ValueError as v_error:
+                    return make_response({"Errors" : [str(v_error)]}, 400)
+        
+            db.session.commit()
+            return make_response(user.to_dict(only=("id", "team_id", "first_name", 
+                "last_name", "username", "password", "team.name", "swimmers.name",)), 200)
+
+    def delete(self, id):
+        user = User.query.filter(User.id == id).first()
+        if not user:
+            return make_response({"Error" : "User not found"}, 404)
+        else:
+            db.session.delete(user)
+            db.session.commit()
+
+            return make_response(f"User: {user.first_name} {user.last_name}, ID: {user.id}, deleted successfully.", 204)
+
+api.add_resource(UsersById, "/users/<int:id>")
 
 
 if __name__ == '__main__':

@@ -21,9 +21,6 @@ class Swimmer(db.Model, SerializerMixin):
 
 
     #validations
-
-    def __repr__(self):
-        return f'<Swimmer {self.id}: {self.name}>'
     
 
 class Team(db.Model, SerializerMixin):
@@ -34,11 +31,9 @@ class Team(db.Model, SerializerMixin):
 
     #relationships
     swimmer = db.relationship("Swimmer", back_populates="team")
+    user = db.relationship("User", back_populates="team")
 
     #validations
-
-    def __repr__(self):
-        return f'<Team {self.id}: {self.name}>'
         
 
 class Event(db.Model, SerializerMixin):
@@ -52,9 +47,6 @@ class Event(db.Model, SerializerMixin):
     swimmer = association_proxy("times", "swimmer")
 
     #validations
-
-    def __repr__(self):
-        return f'<Event {self.id}: {self.name}>'
     
     
 class Time(db.Model, SerializerMixin):
@@ -71,8 +63,7 @@ class Time(db.Model, SerializerMixin):
 
     #validations
 
-    def __repr__(self):
-        return f'<Time {self.id}: {self.time}>'
+
     
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
@@ -85,9 +76,9 @@ class User(db.Model, SerializerMixin):
     password = db.Column(db.String, nullable=False)
 
     #relationships
-    
+    team = db.relationship("Team", back_populates="user")
+    swimmers = association_proxy("team", "swimmer")
 
     #validations
 
-    def __repr__(self):
-        return f'<User {self.id}: {self.time}>'
+
