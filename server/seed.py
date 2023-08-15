@@ -8,7 +8,19 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import Swimmer, Team, Event, Time, db
+from models import Swimmer, Team, Event, Time, User, db
+
+def seed_users():
+    user = User(
+        first_name="Sean",
+        last_name="Stevens",
+        username="Sstevens",
+        password="password1",
+        team_id=4 
+    )
+
+    db.session.add(user)
+    db.session.commit()
 
 def create_swimmers(teams):
     fake = Faker()
@@ -57,6 +69,7 @@ def create_times():
 if __name__ == "__main__":
     with app.app_context():
         print("Clearing db...")
+        User.query.delete()
         Swimmer.query.delete()
         Team.query.delete()
         Event.query.delete()
@@ -85,5 +98,8 @@ if __name__ == "__main__":
 
         print("Seeding times...")
         create_times()
+
+        print("Seeding users...")
+        seed_users()
         
         print("Done seeding!")

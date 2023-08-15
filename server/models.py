@@ -73,3 +73,21 @@ class Time(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<Time {self.id}: {self.time}>'
+    
+class User(db.Model, SerializerMixin):
+    __tablename__ = "users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    team_id = db.Column(db.Integer, db.ForeignKey("teams.id"))
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
+    username = db.Column(db.String, unique=True, nullable=False)
+    password = db.Column(db.String, nullable=False)
+
+    #relationships
+    
+
+    #validations
+
+    def __repr__(self):
+        return f'<User {self.id}: {self.time}>'
