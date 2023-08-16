@@ -15,7 +15,7 @@ def seed_users():
         first_name="Sean",
         last_name="Stevens",
         username="Sstevens",
-        password="password1",
+        password_hash="password1",
         team_id=4 
     )
 

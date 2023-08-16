@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, make_response
+from flask import request, make_response, session
 from flask_restful import Resource
 
 # Local imports
@@ -215,7 +215,7 @@ class Users(Resource):
 
     def get(self):
         return make_response([u.to_dict(only=("id", "team_id", "first_name", 
-            "last_name", "username", "password", "team.name", "swimmers.name", )) 
+            "last_name", "username", "team.name", "swimmers.name", )) 
             for u in User.query.all()])
     
     def post(self):
@@ -226,15 +226,16 @@ class Users(Resource):
                 first_name = data["first_name"],
                 last_name = data["last_name"],
                 username = data["username"],
-                password = data["password"],
+                password_hash = data["password"],
             )
         except ValueError as v_error:
             return make_response({"Errors" : [str(v_error)]}, 422)
         
         db.session.add(user)
         db.session.commit()
+
         return make_response(user.to_dict(only=("id", "team_id", "first_name", 
-            "last_name", "username", "password", "team.name", "swimmers.name",)))
+            "last_name", "username", "team.name", "swimmers.name",)))
 
 api.add_resource(Users, "/users")
 
@@ -246,7 +247,7 @@ class UsersById(Resource):
             return make_response({"Error" : "User not found"}, 404)
         else:
             return make_response(user.to_dict(only=("id", "team_id", "first_name", 
-            "last_name", "username", "password", "team.name", "swimmers.name",)), 200)
+            "last_name", "username", "team.name", "swimmers.name",)), 200)
         
     def patch(self, id):
         user = User.query.filter(User.id == id).first()
@@ -262,7 +263,7 @@ class UsersById(Resource):
         
             db.session.commit()
             return make_response(user.to_dict(only=("id", "team_id", "first_name", 
-                "last_name", "username", "password", "team.name", "swimmers.name",)), 200)
+                "last_name", "username", "team.name", "swimmers.name",)), 200)
 
     def delete(self, id):
         user = User.query.filter(User.id == id).first()
@@ -275,6 +276,54 @@ class UsersById(Resource):
             return make_response(f"User: {user.first_name} {user.last_name}, ID: {user.id}, deleted successfully.", 204)
 
 api.add_resource(UsersById, "/users/<int:id>")
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    try:
+        user = User.query.filter_by(name=data['name']).first()
+        if user.authenticate(data['password']):
+            response = make_response(user.to_dict(), 200)
+            return response
+    except:
+        return make_response({'error': 'name or password incorrect'}, 401)
+    
+@app.route('/logout', methods=['DELETE'])
+def logout():
+    session['user_id'] = None
+    return make_response('', 204)
+
+# class UserLogin(Resource):
+
+#     def post(self):
+#         data = request.get_json()
+#         username = data.get('username')
+#         password = data.get('password')
+
+#         if not username or password:
+#             return {"Error" : "Invalid username or password"}
+#         else:
+#             try:
+#                 user = User.query.filter(User.username == username).first()
+#                 if user.authenticate(data["password"]):
+#                     session["user_id"] = user.id
+#                     response = make_response(user.to_dict(only=("id", "first_name",
+#                                     "last_name", "username", )), 200)
+#                     return response
+#             except:
+#                 return make_response({"Error" : "Invalid username or password"}, 401)
+
+        # if not username or not password:
+        #     return {"message": "Invalid username or password"}, 400
+
+        # user = User.query.filter_by(username=username).first()
+
+        # if user and user._password_hash == password:
+        #     return {"message": "Login successful", "user_id": user.id}, 200
+        # else:
+        #     return {"message": "Invalid username or password"}, 401
+        
+# api.add_resource(UserLogin, "/login")
 
 
 if __name__ == '__main__':
