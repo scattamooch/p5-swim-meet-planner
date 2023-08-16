@@ -1,8 +1,9 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
+import pdb
 
-from config import db, metadata
+from config import db, metadata, bcrypt
 
 metadata = metadata
 db = db
@@ -73,12 +74,24 @@ class User(db.Model, SerializerMixin):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     username = db.Column(db.String, unique=True, nullable=False)
-    password = db.Column(db.String, nullable=False)
+    _password_hash = db.Column(db.String)
+
+    @property
+    def password_hash(self):
+        return self._password_hash
+
+    @password_hash.setter
+    def password_hash(self, new_password_string):
+        byte_object = new_password_string.encode('utf-8')
+        encrypted_hash_object = bcrypt.generate_password_hash(byte_object)
+        hash_object_as_string = encrypted_hash_object.decode('utf-8')
+        self._password_hash = hash_object_as_string
+
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
 
     #relationships
     team = db.relationship("Team", back_populates="user")
     swimmers = association_proxy("team", "swimmer")
 
     #validations
-
-
