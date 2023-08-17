@@ -281,50 +281,32 @@ api.add_resource(UsersById, "/users/<int:id>")
 def login():
     data = request.get_json()
     try:
-        user = User.query.filter_by(name=data['name']).first()
+        user = User.query.filter_by(username=data['username']).first()
         if user.authenticate(data['password']):
-            response = make_response(user.to_dict(), 200)
+            session['user_id'] = user.id
+            response = make_response(user.to_dict(only=("id", "team_id", "first_name", 
+            "last_name", "username", )), 200)
             return response
-    except:
+    except Exception as e:
+        print("Error: ", str(e))
         return make_response({'error': 'name or password incorrect'}, 401)
+    
+@app.route('/whodat', methods=['GET'])
+def authorize():
+    try:
+        user = User.query.filter_by(id=session.get('user_id')).first()
+        response = make_response(user.to_dict(only=("id", "team_id", "first_name", 
+            "last_name", "username", )), 200)
+        return response
+    except:
+        return make_response({
+            "error": "User not found"
+        }, 404)
     
 @app.route('/logout', methods=['DELETE'])
 def logout():
     session['user_id'] = None
     return make_response('', 204)
-
-# class UserLogin(Resource):
-
-#     def post(self):
-#         data = request.get_json()
-#         username = data.get('username')
-#         password = data.get('password')
-
-#         if not username or password:
-#             return {"Error" : "Invalid username or password"}
-#         else:
-#             try:
-#                 user = User.query.filter(User.username == username).first()
-#                 if user.authenticate(data["password"]):
-#                     session["user_id"] = user.id
-#                     response = make_response(user.to_dict(only=("id", "first_name",
-#                                     "last_name", "username", )), 200)
-#                     return response
-#             except:
-#                 return make_response({"Error" : "Invalid username or password"}, 401)
-
-        # if not username or not password:
-        #     return {"message": "Invalid username or password"}, 400
-
-        # user = User.query.filter_by(username=username).first()
-
-        # if user and user._password_hash == password:
-        #     return {"message": "Login successful", "user_id": user.id}, 200
-        # else:
-        #     return {"message": "Invalid username or password"}, 401
-        
-# api.add_resource(UserLogin, "/login")
-
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
