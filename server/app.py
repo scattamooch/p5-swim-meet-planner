@@ -129,7 +129,8 @@ class TeamsById(Resource):
             return make_response({"Error" : "Team not found"}, 400)
         else:
             return make_response(team.to_dict(only= (
-            "id", "name", "swimmer.name", "-swimmer.team", )), 200)
+            "id", "name", "swimmer.name", "swimmer.times",
+            "-swimmer.times.swimmer", "-swimmer.times.event", "-swimmer.team", )), 200)
         
     def patch(self, id):
         team = Team.query.filter(Team.id == id).first()
@@ -226,7 +227,7 @@ class Users(Resource):
                 first_name = data["first_name"],
                 last_name = data["last_name"],
                 username = data["username"],
-                password_hash = data["password"],
+                password_hash = data["password_hash"],
             )
         except ValueError as v_error:
             return make_response({"Errors" : [str(v_error)]}, 422)
