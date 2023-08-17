@@ -1,10 +1,15 @@
 import React from "react";
+import { useUser } from "./UserContext";
 import "../styling/Main.css"
 
 function Main() {
 
+    const {userId} = useUser();
+
     return (
-        <h1>Main landing page</h1>
+        <div>
+            <h1>Current user is: {userId}</h1>
+        </div>
     )
 }
 

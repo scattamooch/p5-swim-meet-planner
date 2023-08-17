@@ -25,7 +25,7 @@ db = SQLAlchemy(metadata=metadata)
 migrate = Migrate(app, db)
 db.init_app(app)
 bcrypt = Bcrypt(app)
-# app.secret_key = 
+app.secret_key = b'\xec\xd2\x958O`Y\x0f\xdc`\x1cO\xa2\xaf\xb5\xd8'
 
 # Instantiate REST API
 api = Api(app)

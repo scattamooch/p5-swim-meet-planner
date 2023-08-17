@@ -1,10 +1,13 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
+import { useUser } from "./UserContext";
 import {useHistory} from "react-router-dom"
 import "../styling/Login.css"
 
 function Login() {
 
+    const {userId, login, logout} = useUser();
     const history = useHistory();
+
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [loginError, setLoginError] = useState(null)
@@ -16,6 +19,10 @@ function Login() {
     function handlePasswordChange(event) {
         setPassword(event.target.value)
     };
+
+    function handleLogin(data) {
+        login(data)
+    }
 
     async function handleSubmit(event) {
         event.preventDefault()
@@ -33,16 +40,12 @@ function Login() {
             });
             if (response.ok) {
                 const data = await response.json();
-                if (data.message === "Login successful") {
                     console.log("Login successful");
                     setLoginError(null);
-                    // handleLogin(data) CHANGE LATER
+                    handleLogin(data) //if somethings fucking up its prolly here
                     history.push("/");
-                } else {
-                    console.log("Login failed");
-                    setLoginError("Invalid username or password");
-                }
-            } else {
+                } 
+            else {
                 console.log("HTTP Request failed with status: " + response.status);
                 setLoginError("Invalid username or password");
             }
@@ -51,7 +54,7 @@ function Login() {
             setLoginError("An error occurred while loggin in");
         }
     }
-
+    
     return (
         <div>
           <div className="login-container">

@@ -1,9 +1,17 @@
 import React, {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom"
+import { useUser } from "./UserContext";
 import "../styling/Navbar.css"
 
 function Navbar() {
-    return (
+
+  const {userId, logout} = useUser();
+
+  function handleLogout() {
+    logout()
+  }
+
+  return (
       <nav className="nav-bar">
         <div className="nav-bar-container">
           <div className="nav-links-container">
@@ -15,8 +23,11 @@ function Navbar() {
           </div>
           {/* <h1 className="nav-bar-title">Working title</h1> */}
           <div className="auth-links-container">
-            <NavLink exact to="/login" className="auth-link">Login</NavLink>
-            <NavLink exact to="/register" className="auth-link">Register</NavLink>
+            {!userId &&
+            <NavLink exact to="/login" className="auth-link">Login</NavLink>}
+            {userId ?
+            (<NavLink exact to="/" className="auth-link" onClick={handleLogout}>Logout</NavLink>
+            ) : (<NavLink exact to="/register" className="auth-link">Register</NavLink>)}
           </div>
         </div>
       </nav>

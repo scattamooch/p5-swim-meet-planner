@@ -48,8 +48,8 @@ class Event(db.Model, SerializerMixin):
     swimmer = association_proxy("times", "swimmer")
 
     #validations
-    
-    
+      
+        
 class Time(db.Model, SerializerMixin):
     __tablename__ = "times"
 
@@ -63,9 +63,7 @@ class Time(db.Model, SerializerMixin):
     event = db.relationship("Event", back_populates="times")
 
     #validations
-
-
-    
+   
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 
