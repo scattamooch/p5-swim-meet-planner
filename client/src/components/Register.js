@@ -38,7 +38,7 @@ function Register() {
             })
             if (response.ok) {
                 const data = await response.json();
-                console.log("Registration successful");
+                // console.log("Registration successful");
                 setSignUpError(null);
                 handleLogin(data);
                 history.push("/");
