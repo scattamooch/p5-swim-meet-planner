@@ -33,7 +33,7 @@ class Swimmers(Resource):
 
     def get(self):
         return make_response([s.to_dict(only=("id", "name", "team_id", 
-            "team.name", "times", "-times.swimmer", "-times.event", "-times.id", 
+            "team.name", "times", "-times.swimmer", "-times.event", 
             "-times.swimmer_id", )) for s in Swimmer.query.all()], 200)
 
     # might have to come back here and ajust inputs for events/times, not sure 
@@ -65,7 +65,7 @@ class SwimmersById(Resource):
             return make_response({"Error" : "Swimmer not found"}, 400)
         else:
             return make_response(swimmer.to_dict(only=("id", "name", "team_id", 
-            "team.name", "times.time", "times.event.name", "-times.swimmer", "-times.id", 
+            "team.name", "times", "-times.swimmer", "-times.event", 
             "-times.swimmer_id", )), 200)
         
     def patch(self, id):
@@ -129,8 +129,10 @@ class TeamsById(Resource):
             return make_response({"Error" : "Team not found"}, 400)
         else:
             return make_response(team.to_dict(only= (
-            "id", "name", "swimmer.name", "swimmer.times",
-            "-swimmer.times.swimmer", "-swimmer.times.event", "-swimmer.team", )), 200)
+            "id", "name", "swimmer.name", "swimmer.id", "swimmer.times",
+            "-swimmer.times.event_id", "-swimmer.times.swimmer_id",
+            "-swimmer.times.swimmer", "-swimmer.times.event", "-swimmer.team", )),
+            200)
         
     def patch(self, id):
         team = Team.query.filter(Team.id == id).first()
