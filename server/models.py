@@ -16,10 +16,9 @@ class Swimmer(db.Model, SerializerMixin):
     team_id = db.Column(db.Integer, db.ForeignKey("teams.id"))
 
     #relationships
-    times = db.relationship("Time", back_populates="swimmer")
+    times = db.relationship("Time", back_populates="swimmer", cascade="all, delete-orphan")
     event = association_proxy("times", "event")
     team = db.relationship("Team", back_populates="swimmer")
-
 
     #validations
     
@@ -63,6 +62,17 @@ class Time(db.Model, SerializerMixin):
     event = db.relationship("Event", back_populates="times")
 
     #validations
+    @validates("time")
+    def validates_time(self, key, new_time):
+        if not new_time:
+            new_time = "0.00"
+        elif len(new_time) > 8:
+            raise ValueError("Time must be submitted in total seconds. Time can have 3 digits before the decimal, and 2 digits after.")
+        parts = new_time.split('.')
+        if len(parts) != 2 or len(parts[0]) > 3 or len(parts[1]) > 2:
+            raise ValueError("Time must be submitted in total seconds. Time can have 3 digits before the decimal, and 2 digits after.")
+    
+        return new_time
    
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
@@ -93,3 +103,54 @@ class User(db.Model, SerializerMixin):
     swimmers = association_proxy("team", "swimmer")
 
     #validations
+    @validates("first_name")
+    def validates_first_name(self, key, new_first_name):
+        if not new_first_name:
+            raise ValueError("A first name must be provided")
+        elif len(new_first_name) > 15:
+            raise ValueError("A name must be shorter than 15 characters")
+        else: 
+            return new_first_name
+        
+    @validates("last_name")
+    def validates_last_name(self, key, new_last_name):
+        if not new_last_name:
+            raise ValueError("A last name must be provided")
+        elif len(new_last_name) > 20:
+            raise ValueError("A last name must be shorter than 20 characters")
+        else:
+            return new_last_name
+        
+    @validates("username")
+    def validates_username(self, key, new_username):
+        if not new_username:
+            raise ValueError("A username must be provided")
+        elif len(new_username) > 20:
+            raise ValueError("A username must be shorter than 15 characters")
+        else: 
+            existing_user = User.query.filter(new_username == User.username).first()
+            if existing_user:
+                raise ValueError("That username already exists")
+            
+            return new_username
+        
+    @validates("_password_hash")
+    def validates_password(self, key, new_password):
+        if not new_password:
+            raise ValueError("Please set a password")
+        has_letter = False
+        has_number = False
+
+        for char in new_password:
+            if char.isalpha():
+                has_letter = True
+            elif char.isdigit():
+                has_number = True
+
+            if has_letter and has_number:
+                break
+            
+        if not (has_letter and has_number):
+            raise ValueError("Password must contain at least one letter AND at least one number")
+        
+        return new_password
