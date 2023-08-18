@@ -15,9 +15,9 @@ export function UserProvider({children}) {
                     const data = await response.json();
                     setUserId(data.id);
                     setUserTeamId(data.team_id);
-                    console.log(data);
+                    // console.log(data);
                 } else {
-                    console.log("Who dat? Dat's nobody");
+                    // console.log("Who dat? Dat's nobody");
                 }
             } catch (error) {
                 console.log("Error: ", error);
@@ -29,7 +29,7 @@ export function UserProvider({children}) {
     }, []);
 
     function login(data) {
-        console.log(`${data.first_name} is in the building.`)
+        // console.log(`${data.first_name} is in the building.`)
         setUserId(data.id);
         setUserTeamId(data.team_id);
     };
@@ -38,7 +38,7 @@ export function UserProvider({children}) {
         await fetch("/logout", {
             method: "DELETE",
         })
-        console.log("User has left the building :(")
+        // console.log("User has left the building :(")
         setUserId(null);
         setUserTeamId(null);
     };

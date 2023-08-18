@@ -7,9 +7,11 @@ function MyTeam() {
     const {userId, userTeamId, } = useUser();
     const [userSwimmers, setUserSwimmers] = useState([]);
     const [editMode, setEditMode] = useState(false);
+    const [cellChanged, setCellChanged] = useState(false);
+    const [cellChanges, setCellChanges]= useState(false);
 
     function toggleEditMode() {
-        console.log("Toggled edit mode")
+        // console.log("Toggled edit mode")
         setEditMode(!editMode);
     }
 
@@ -22,7 +24,7 @@ function MyTeam() {
                     setUserSwimmers(data.swimmer);
                     // console.log(data);
                 } else {
-                    console.log("Hit the else block")
+                    // console.log("Hit the else block")
                 }
             } catch (error) {
                 console.log("Caught the error: ", error)
@@ -35,21 +37,23 @@ function MyTeam() {
         if (seconds >= 60) {
             const minutes = Math.floor(seconds / 60);
             const remainder = (seconds % 60).toFixed(2);
-            const formattedSeconds = remainder.padStart(5, '0'); // Ensure 5 digits in total
+            const formattedSeconds = remainder.padStart(5, '0'); // 5 total digits, add 0 to mm:_s:ms
             return `${minutes}:${formattedSeconds}`;
         } else {
             return seconds;
         }
     }
 
-    console.log("User Swimmers: ", userSwimmers)
+    // console.log("User Swimmers: ", userSwimmers)
     let tableBody = null
     if (userSwimmers.length > 0) {
         // gets me down to just name, times, and swimmers
         const swimmerInfo = userSwimmers.map((swimmer) => ({
             name: swimmer.name,
             times: swimmer.times.map((time) => ({
-                time: formatTime(time.time)
+                time: formatTime(time.time),
+                time_id: time.id,
+                swimmer_id: time.swimmer_id,
             }))
         }));
         console.log("Swimmer Info:", swimmerInfo);
@@ -59,11 +63,11 @@ function MyTeam() {
                 <tr key={index} className="table-row">
 
                     {editMode ? (
-                        <td className="table-cell">
+                        <td className="table-cell" >
                             <input type="text" placeholder={swimmer.name} className="edit-swimmer-name"/>
                         </td>
                     ) : (
-                        <td className="table-cell">{swimmer.name}</td>
+                        <td className="table-cell" id={swimmer.times[0].swimmer_id}>{swimmer.name}</td> //gives each name cell the ID for the swimmer
                     )}
 
                     {swimmer.times.map((time, timeIndex) => (
@@ -72,7 +76,7 @@ function MyTeam() {
                                 <input type="text" placeholder={time.time} className="edit-swimmer-time"/>
                             </td>
                         ) : (
-                            <td key={timeIndex} className="table-cell">{time.time}</td>
+                            <td key={timeIndex} className="table-cell" id={time.time_id}>{time.time}</td> //gives each cell it's unique time ID
                         )
                     ))}
 

@@ -40,7 +40,7 @@ function Login() {
             });
             if (response.ok) {
                 const data = await response.json();
-                    console.log("Login successful");
+                    // console.log("Login successful");
                     setLoginError(null);
                     handleLogin(data) //if somethings fucking up its prolly here
                     history.push("/");
