@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from "react";
 import "../styling/MyTeam.css"
 import { useUser } from "./UserContext";
+import {useHistory} from "react-router-dom"
 
-// GET request to teams gives me team id, name, and swimmers []
-// Swimmer gives me name and times []
-// Time gives me event ID, time ID, swimmer ID, and time
-// As it stands, I'm assigning the swimmer "name" cell their swimmer ID via an index in times... id={swimmer.times[0].swimmer_id}
-    // which makes deletion miserable
-    // restructure data from endpoint? 2 get requests? 
+// Patch and delete seem to be working 100% now, and changes are saving to state as well so no reload req'd
+    // Never write a conditional patch again, that was a waste of time and energy 
+// Edit mode renders input fields --> handleName/TimeChange stores changes onChange --> Save Button triggers patch req --> changes to db AND state 
+    // majority of the conditionality of the patch comes down to fieldName (time v. name) and changes to cells being registered in state via boolean per cell
+
+// Refactor, ugly AF... and find out why each request gets sent 7-12 times per click
 
 function MyTeam() {
 
@@ -17,7 +18,8 @@ function MyTeam() {
     const [editMode, setEditMode] = useState(false);
     const [cellChanged, setCellChanged] = useState(false);
     const [cellChanges, setCellChanges] = useState([]);
-    console.log("User swimmers: ", userSwimmers)
+    const [newSwimmerName, setNewSwimmerName] = useState("");
+    // console.log("User swimmers: ", userSwimmers)
 
     function toggleEditMode() {
         // console.log("Toggled edit mode")
@@ -53,9 +55,108 @@ function MyTeam() {
         }
     }
 
+    function handleNameChange (event, swimmerId) {
+        const newValue = event.target.value;
+        setCellChanged(true);
+        setCellChanges((prevChanges) => [
+            ...prevChanges,
+            { swimmerId, fieldName: "name", newValue },
+        ]);
+    };
     
+    function handleTimeChange(event, swimmerId, timeId) {
+        const newValue = event.target.value;
+        setCellChanged(true);
+        setCellChanges((prevChanges) => [
+            ...prevChanges,
+            { swimmerId, timeId, fieldName: "time", newValue },
+        ]);
+    };
+    
+    async function handleDeleteRow(swimmerId) {
+        const confirmDelete = window.confirm("Are you sure you want to remove this swimmer? This will also remove all of the swimmer's times, and this action cannot be undone.")
+    
+        if (!confirmDelete) {
+        console.log("User chose not to delete the swimmer.");
+        return; 
+        }
+            try {
+                const response = await fetch(`http://127.0.0.1:5555/swimmers/${swimmerId}`, {
+                    method: "DELETE",
+                });
+                if (response.ok) {
+                    setUserSwimmers((prevSwimmers) =>
+                        prevSwimmers.filter((swimmer) => swimmer.id !== swimmerId)
+                    );
+                    console.log("Ohhhh that swimmer gone")
+                } else {
+                    console.log("Error deleting row");
+                }
+            } catch (error) {
+                console.log("Error deleting row: ", error);
+            }
+            setEditMode(false);
+        };
+    
+    async function patchRequests(swimmerId, timeId, updatedData) {
+        if (cellChanged) {
+            try {
+                for (const change of cellChanges) {
+                    const { swimmerId, timeId, fieldName, newValue } = change;
+                    const endpoint =
+                        fieldName === "name"
+                            ? `http://127.0.0.1:5555/swimmers/${swimmerId}`
+                            : `http://127.0.0.1:5555/times/${timeId}`;
+                    const response = await fetch(endpoint, {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ [fieldName]: newValue }),
+                    });
+    
+                    if (response.ok) {
+                        console.log("Update successful");
+                        if (fieldName === "name") {
+                            setUserSwimmers(prevData =>
+                                prevData.map(swimmer =>
+                                    swimmer.id === swimmerId
+                                        ? { ...swimmer, [fieldName]: newValue }
+                                        : swimmer
+                                )
+                            );
+                        } else if (fieldName === "time") {
+                            setUserSwimmers(prevData =>
+                                prevData.map(swimmer => {
+                                    if (swimmer.id === swimmerId) {
+                                        const updatedTimes = swimmer.times.map(time =>
+                                            time.id === timeId ? { ...time, [fieldName]: newValue } : time
+                                        );
+                                        return { ...swimmer, times: updatedTimes };
+                                    } else {
+                                        return swimmer;
+                                    }
+                                })
+                            );
+                        }
+                    } else {
+                        console.log(`Patch request for ${fieldName} failed`);
+                    }
+                }
+            } catch (error) {
+                console.error("Error patching data:", error);
+            }
+    
+            // Clear cell changes after successful patching
+            setEditMode(false);
+            setCellChanged(false);
+            setCellChanges([]);
+
+        }
+    }
 
     let tableBody = null;
+    let rowNum = 1;
     if (userSwimmers.length > 0) {
         const swimmerInfo = userSwimmers.map((swimmer) => ({
             name: swimmer.name,
@@ -65,11 +166,12 @@ function MyTeam() {
                 timeId: time.id,
             })),
         }));
-        console.log("Swimmer Info:", swimmerInfo);
+        // console.log("Swimmer Info:", swimmerInfo);
     
         if (swimmerInfo.length > 0) {
             tableBody = swimmerInfo.map((swimmer, index) => (
                 <tr key={index} className="table-row">
+                    <td className="table-cell">{rowNum++}</td>
                     {editMode ? (
                         <td className="table-cell">
                             <input
@@ -114,6 +216,32 @@ function MyTeam() {
         }
     }
 
+    async function handleSubmit() {
+        const newSwimmer = {
+            name: newSwimmerName,
+            team_id: userTeamId,
+        }
+        try {
+            const response = await fetch("http://127.0.0.1:5555/swimmers", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(newSwimmer)
+            })
+            if (response.ok) {
+                const data = await response.json();
+                console.log("New swimmer added successfully")
+                setEditMode(false);
+                window.location.reload();
+            } else {
+                console.log("Failed to add: ", response.status)
+            }
+        } catch (error) {
+            console.log("Error during POST: ", error)
+        }
+    }
+
     return (
         <div className="table-container">
             {userId ? (
@@ -121,12 +249,12 @@ function MyTeam() {
                     <h1>Current user: {userId}</h1>
                     <h2>Current team: {userTeamId}</h2>
                     <div>
-                        Reminder to make tables sortable, and enable an "Edit mode" where a user can patch/post/delete a swimmer
 
                         {editMode ? (
-                        <button onClick={toggleEditMode}>Leave Edit Mode</button>
+                            <button onClick={toggleEditMode}>Cancel Changes</button>
                         ) : (
-                        <button onClick={toggleEditMode}>Edit Mode</button>)}
+                            <button onClick={toggleEditMode}>Edit Mode</button>)}
+
                         {editMode && (<button onClick={patchRequests}>Save Changes</button>)}
 
                     </div>
@@ -134,6 +262,7 @@ function MyTeam() {
                     <table>
                         <thead>
                             <tr>
+                                <th className="column-header">#</th>
                                 <th className="column-header">Name</th>
                                 <th className="column-header">200 Freestyle</th>
                                 <th className="column-header">200 IM</th>
@@ -150,6 +279,22 @@ function MyTeam() {
                         </thead>
                         <tbody>
                             {tableBody}
+                            {editMode && (
+                                <tr className="table-row">
+                                    <td className="table-cell">#</td>
+                                    <td className="table-cell">
+                                        <input
+                                            type="text"
+                                            placeholder="New Swimmer Name"
+                                            className="edit-swimmer-name"
+                                            onChange={(event) => setNewSwimmerName(event.target.value)}
+                                        />
+                                    </td>
+                                    <td className="table-cell">
+                                        <button onClick={handleSubmit}>Add Swimmer</button>
+                                    </td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>
