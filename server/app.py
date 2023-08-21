@@ -5,9 +5,11 @@
 # Remote library imports
 from flask import request, make_response, session
 from flask_restful import Resource
+import random
 
 # Local imports
 from config import app, db, api
+
 # Add your model imports
 from models import Swimmer, Team, Event, Time, User
 
@@ -28,6 +30,17 @@ from models import Swimmer, Team, Event, Time, User
 @app.route('/')
 def index():
     return '<h1>Phase 5 Project Server</h1>'
+
+def create_times(swimmer):
+    all_events = Event.query.all()
+
+    for event in all_events:
+        time = 0
+
+        time_entry = Time(swimmer=swimmer, event=event, time=time)
+
+        db.session.add(time_entry)
+        db.session.commit()
 
 class Swimmers(Resource):
 
@@ -50,7 +63,8 @@ class Swimmers(Resource):
         db.session.add(swimmer)
         db.session.commit()
 
-        # might need a create times and/or events function here
+        create_times(swimmer)
+
         return make_response(swimmer.to_dict(only=("id", "name", "team_id", 
             "team.name", "times", "-times.swimmer", "-times.event", "-times.id", 
             "-times.swimmer_id", )), 201)
