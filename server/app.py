@@ -144,7 +144,7 @@ class TeamsById(Resource):
         else:
             return make_response(team.to_dict(only= (
             "id", "name", "swimmer.name", "swimmer.id", "swimmer.times",
-            "-swimmer.times.event_id", "-swimmer.times.swimmer_id",
+             "-swimmer.times.swimmer_id",
             "-swimmer.times.swimmer", "-swimmer.times.event", "-swimmer.team", )),
             200)
         

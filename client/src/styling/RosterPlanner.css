@@ -1,0 +1,39 @@
+.table-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: auto;
+}
+
+.roster-table {
+    border-collapse: collapse;
+    margin: auto;
+    margin-top: 100px;
+}
+
+.column-header, .table-cell {
+    padding: 10px 20px;
+    text-align: center;
+    background-color: #f2f2f2;
+}
+
+.table-cell {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+}
+
+.table-row:hover .table-cell {
+    background-color: #f7f7f7;
+}
+
+.opposing-swimmer {
+    width: 150px;
+    height: 20px;
+  }
+
+/* .edit-swimmer-time {
+    width: 50px;
+    height: 20px;
+}  */
