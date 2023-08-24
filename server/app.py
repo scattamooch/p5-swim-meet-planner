@@ -325,6 +325,13 @@ def logout():
     session['user_id'] = None
     return make_response('', 204)
 
+
+# #################################################################
+# roster builder endpoint
+@app.route("/roster-builder", methods=["POST"])
+def set_lineup():
+    pass
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
 

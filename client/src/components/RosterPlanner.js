@@ -22,27 +22,34 @@ function RosterPlanner() {
     const [back100, setBack100] = useState({1: "", 2: "", 3: "", swimmerName: ""})
     const [breast100, setBreast100] = useState({1: "", 2: "", 3: "", swimmerName: ""})
 
-    const initialRelayData = {
+    const initialRelayState = {
         1: { swimmerName: "", time: "" },
         2: { swimmerName: "", time: "" },
         3: { swimmerName: "", time: "" },
         4: { swimmerName: "", time: "" }
       };
       
-      // 200 Medley Relays
-      const [aMedley, setAMedley] = useState({ ...initialRelayData });
-      const [bMedley, setBMedley] = useState({ ...initialRelayData });
-      const [cMedley, setCMedley] = useState({ ...initialRelayData });
-      
-      // 200 Free Relays
-      const [a2Free, setA2Free] = useState({ ...initialRelayData });
-      const [b2Free, setB2Free] = useState({ ...initialRelayData });
-      const [c2Free, setC2Free] = useState({ ...initialRelayData });
-      
-      // 400 Free Relays
-      const [a4Free, setA4Free] = useState({ ...initialRelayData });
-      const [b4Free, setB4Free] = useState({ ...initialRelayData });
-      const [c4Free, setC4Free] = useState({ ...initialRelayData });
+    // 200 Medley Relays
+    const [aMedley, setAMedley] = useState({ ...initialRelayState });
+    const [bMedley, setBMedley] = useState({ ...initialRelayState });
+    const [cMedley, setCMedley] = useState({ ...initialRelayState });
+    
+    // 200 Free Relays
+    const [a2Free, setA2Free] = useState({ ...initialRelayState });
+    const [b2Free, setB2Free] = useState({ ...initialRelayState });
+    const [c2Free, setC2Free] = useState({ ...initialRelayState });
+    
+    // 400 Free Relays
+    const [a4Free, setA4Free] = useState({ ...initialRelayState });
+    const [b4Free, setB4Free] = useState({ ...initialRelayState });
+    const [c4Free, setC4Free] = useState({ ...initialRelayState });
+
+    // Relay Scoring/Placement State -- total up the relay splits for placement and scoring
+    const [medleyTimes, setMedleyTimes] = useState({1: 0, 2: 0, 3: 0})
+    const [twoFreeRelayTimes, setTwoFreeRelayTimes] = useState({1: 0, 2: 0, 3: 0})
+    const [fourFreeRelayTimes, setFourFreeRelayTimes] = useState({1: 0, 2: 0, 3: 0})
+
+
 
     function handleFree200(laneNumber, time, swimmerName) {
         setFree200(prevState => ({
@@ -140,6 +147,19 @@ function RosterPlanner() {
         })
         )
     }
+        // useEffect saves the total relay times to state
+    useEffect(() => {
+        const totalTimes = {
+          1: parseFloat(aMedley[1].time) + parseFloat(aMedley[2].time) + parseFloat(aMedley[3].time) + parseFloat(aMedley[4].time),
+          2: parseFloat(bMedley[1].time) + parseFloat(bMedley[2].time) + parseFloat(bMedley[3].time) + parseFloat(bMedley[4].time),
+          3: parseFloat(cMedley[1].time) + parseFloat(cMedley[2].time) + parseFloat(cMedley[3].time) + parseFloat(cMedley[4].time),
+        };
+        
+        setMedleyTimes(totalTimes);
+      }, [aMedley, bMedley, cMedley]);
+
+    //   console.log(medleyTimes);
+      
 
 // 2 Free Relay Handlers
     function handleA2Free(position, time, swimmerName) {
@@ -165,29 +185,53 @@ function RosterPlanner() {
         )
     }
 
-// 4 Free Relay Handlers
-function handleA4Free(position, time, swimmerName) {
-    setA4Free(prevState => ({
-        ...prevState,
-        [position]: {swimmerName, time}
-    })
-    )
-}
+    useEffect(() => {
+        const totalTimes = {
+          1: parseFloat(a2Free[1].time) + parseFloat(a2Free[2].time) + parseFloat(a2Free[3].time) + parseFloat(a2Free[4].time),
+          2: parseFloat(b2Free[1].time) + parseFloat(b2Free[2].time) + parseFloat(b2Free[3].time) + parseFloat(b2Free[4].time),
+          3: parseFloat(c2Free[1].time) + parseFloat(c2Free[2].time) + parseFloat(c2Free[3].time) + parseFloat(c2Free[4].time),
+        };
+        
+        setTwoFreeRelayTimes(totalTimes);
+      }, [a2Free, b2Free, c2Free]);
 
-function handleB4Free(position, time, swimmerName) {
-    setB4Free(prevState => ({
-        ...prevState,
-        [position]: {swimmerName, time}
-    })
-    )
-}
-function handleC4Free(position, time, swimmerName) {
-    setC4Free(prevState => ({
-        ...prevState,
-        [position]: {swimmerName, time}
-    })
-    )
-}
+    //   console.log(twoFreeRelayTimes);
+
+// 4 Free Relay Handlers
+    function handleA4Free(position, time, swimmerName) {
+        setA4Free(prevState => ({
+            ...prevState,
+            [position]: {swimmerName, time}
+        })
+        )
+    }
+
+    function handleB4Free(position, time, swimmerName) {
+        setB4Free(prevState => ({
+            ...prevState,
+            [position]: {swimmerName, time}
+        })
+        )
+    }
+    function handleC4Free(position, time, swimmerName) {
+        setC4Free(prevState => ({
+            ...prevState,
+            [position]: {swimmerName, time}
+        })
+        )
+    }
+
+    useEffect(() => {
+        const totalTimes = {
+          1: parseFloat(a4Free[1].time) + parseFloat(a4Free[2].time) + parseFloat(a4Free[3].time) + parseFloat(a4Free[4].time),
+          2: parseFloat(b4Free[1].time) + parseFloat(b4Free[2].time) + parseFloat(b4Free[3].time) + parseFloat(b4Free[4].time),
+          3: parseFloat(c4Free[1].time) + parseFloat(c4Free[2].time) + parseFloat(c4Free[3].time) + parseFloat(c4Free[4].time),
+        };
+        
+        setFourFreeRelayTimes(totalTimes);
+      }, [a4Free, b4Free, c4Free]);
+
+    //   console.log(fourFreeRelayTimes);
 
     //get Opp team
     async function getOppTeam(teamSelect) {
@@ -232,7 +276,7 @@ function handleC4Free(position, time, swimmerName) {
                     swimmerId: swimmer.id,
                     swimmerName: swimmer.name,
                     ...time,
-                    //x lists of 11 (where x is the number of swimmers on the team)
+                    //x lists of 11 (where x is the number of swimmers on the team, and 11 is the # of events)
                 }
             })
         }).flat() //combine all the lists into one long array of objects (11 * x = # of objects in the array)
@@ -257,6 +301,52 @@ function handleC4Free(position, time, swimmerName) {
             return `${minutes}:${formattedSeconds}`;
         } else {
             return seconds;
+        }
+    }
+
+    function sortAndPlaceIndividuals(race) {
+        const swimmers = Object.entries(race)
+          .filter(([laneNumber, swimmerData]) => laneNumber !== "swimmerName")
+          .map(([laneNumber, swimmerData]) => ({
+            laneNumber: parseInt(laneNumber),
+            time: parseFloat(swimmerData),
+            swimmerName: race.swimmerName,
+          }));
+        swimmers.sort((a, b) => a.time - b.time);
+        const placements = {};
+        swimmers.forEach((swimmer, index) => {
+          const placement = index + 1;
+          placements[swimmer.laneNumber] = `${placement}`;
+        });
+      
+        return placements;
+      }
+
+    function scoreIndividuals(place) {
+        if (place == 1) {
+            return 6
+        } else if (place == 2) {
+            return 4
+        } else if (place == 3) {
+            return 3
+        } else if (place == 4) {
+            return 2
+        } else if (place == 5) {
+            return 1
+        } else {
+            return 0
+        }
+    }
+
+    function scoreRelays(place) {
+        if (place == 1) {
+            return 8
+        } else if (place == 2) {
+            return 4
+        } else if (place == 3) {
+            return 2
+        } else {
+            return 0
         }
     }
 
@@ -332,7 +422,7 @@ function handleC4Free(position, time, swimmerName) {
                         </td>
                         <td className="table-cell">{formatTime(aMedley[2].time)}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(medleyTimes)[1]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -371,7 +461,7 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(aMedley[4].time)}</td>
-                        <td className="table-cell">Score</td>
+                        <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(medleyTimes)[1])}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -425,7 +515,7 @@ function handleC4Free(position, time, swimmerName) {
                         </td>
                         <td className="table-cell">{formatTime(bMedley[2].time)}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(medleyTimes)[2]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -464,7 +554,7 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(bMedley[4].time)}</td>
-                        <td className="table-cell">Score</td>
+                        <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(medleyTimes)[2])}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -518,7 +608,7 @@ function handleC4Free(position, time, swimmerName) {
                         </td>
                         <td className="table-cell">{formatTime(cMedley[2].time)}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(medleyTimes)[3]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -557,7 +647,7 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(cMedley[4].time)}</td>
-                        <td className="table-cell">Score</td>
+                        <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(medleyTimes)[3])}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -596,7 +686,7 @@ function handleC4Free(position, time, swimmerName) {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreRelays(sortAndPlaceIndividuals(medleyTimes)[1])) + parseInt(scoreRelays(sortAndPlaceIndividuals(medleyTimes)[2])) + parseInt(scoreRelays(sortAndPlaceIndividuals(medleyTimes)[3]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">Add Score</td>
                         <td className="table-cell">Add Score</td>
@@ -620,8 +710,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(free200[1])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free200)[1])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free200)[1]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -640,8 +730,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(free200[2])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free200)[2])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free200)[2]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -660,8 +750,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(free200[3])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free200)[3])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free200)[3]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -686,7 +776,9 @@ function handleC4Free(position, time, swimmerName) {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[1])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[2])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[3]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">Add Score</td>
                         <td className="table-cell">Add Score</td>
@@ -710,8 +802,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(IM200[1])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(IM200)[1])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(IM200)[1]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -730,8 +822,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(IM200[2])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(IM200)[2])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(IM200)[2]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -750,8 +842,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(IM200[3])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(IM200)[3])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(IM200)[3]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -776,7 +868,9 @@ function handleC4Free(position, time, swimmerName) {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[1])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[2])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[3]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">Add Score</td>
                         <td className="table-cell">Add Score</td>
@@ -800,8 +894,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(free50[1])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free50)[1])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free50)[1]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -820,8 +914,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(free50[2])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free50)[2])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free50)[2]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -840,8 +934,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(free50[3])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free50)[3])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free50)[3]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -866,7 +960,9 @@ function handleC4Free(position, time, swimmerName) {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[1])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[2])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[3]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">Add Score</td>
                         <td className="table-cell">Add Score</td>
@@ -890,8 +986,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(fly100[1])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(fly100)[1])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(fly100)[1]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -910,8 +1006,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(fly100[2])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(fly100)[2])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(fly100)[2]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -930,8 +1026,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(fly100[3])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(fly100)[3])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(fly100)[3]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -956,7 +1052,9 @@ function handleC4Free(position, time, swimmerName) {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[1])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[2])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[3]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">Add Score</td>
                         <td className="table-cell">Add Score</td>
@@ -980,8 +1078,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(free100[1])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free100)[1])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free100)[1]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1000,8 +1098,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(free100[2])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free100)[2])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free100)[2]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1020,8 +1118,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(free100[3])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free100)[3])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free100)[3]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1046,7 +1144,9 @@ function handleC4Free(position, time, swimmerName) {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[1])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[2])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[3]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">Add Score</td>
                         <td className="table-cell">Add Score</td>
@@ -1070,8 +1170,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(free500[1])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free500)[1])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free500)[1]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1090,8 +1190,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(free500[2])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free500)[2])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free500)[2]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1110,8 +1210,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(free500[3])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free500)[3])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free500)[3]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1136,7 +1236,9 @@ function handleC4Free(position, time, swimmerName) {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[1])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[2])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[3]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">Add Score</td>
                         <td className="table-cell">Add Score</td>
@@ -1181,7 +1283,7 @@ function handleC4Free(position, time, swimmerName) {
                         </td>
                         <td className="table-cell">{formatTime(a2Free[2].time)}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(twoFreeRelayTimes)[1]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1220,7 +1322,7 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(a2Free[4].time)}</td>
-                        <td className="table-cell">Score</td>
+                        <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(twoFreeRelayTimes)[1])}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -1274,7 +1376,7 @@ function handleC4Free(position, time, swimmerName) {
                         </td>
                         <td className="table-cell">{formatTime(b2Free[2].time)}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(twoFreeRelayTimes)[2]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1313,7 +1415,7 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(b2Free[4].time)}</td>
-                        <td className="table-cell">Score</td>
+                        <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(twoFreeRelayTimes)[2])}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -1367,7 +1469,7 @@ function handleC4Free(position, time, swimmerName) {
                         </td>
                         <td className="table-cell">{formatTime(c2Free[2].time)}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(twoFreeRelayTimes)[3]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1406,7 +1508,7 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(c2Free[4].time)}</td>
-                        <td className="table-cell">Score</td>
+                        <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(twoFreeRelayTimes)[3])}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -1445,7 +1547,9 @@ function handleC4Free(position, time, swimmerName) {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreRelays(sortAndPlaceIndividuals(twoFreeRelayTimes)[1])) + 
+                                                    parseInt(scoreRelays(sortAndPlaceIndividuals(twoFreeRelayTimes)[2])) + 
+                                                    parseInt(scoreRelays(sortAndPlaceIndividuals(twoFreeRelayTimes)[3]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">Add Score</td>
                         <td className="table-cell">Add Score</td>
@@ -1469,8 +1573,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(back100[1])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(back100)[1])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(back100)[1]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1489,8 +1593,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(back100[2])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(back100)[2])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(back100)[2]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1509,8 +1613,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(back100[3])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(back100)[3])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(back100)[3]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1535,7 +1639,9 @@ function handleC4Free(position, time, swimmerName) {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[1])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[2])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[3]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">Add Score</td>
                         <td className="table-cell">Add Score</td>
@@ -1559,8 +1665,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(breast100[1])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(breast100)[1])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(breast100)[1]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1579,8 +1685,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(breast100[2])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(breast100)[2])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(breast100)[2]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1599,8 +1705,8 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(breast100[3])}</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(breast100)[3])}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(breast100)[3]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1625,7 +1731,9 @@ function handleC4Free(position, time, swimmerName) {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[1])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[2])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[3]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">Add Score</td>
                         <td className="table-cell">Add Score</td>
@@ -1670,7 +1778,7 @@ function handleC4Free(position, time, swimmerName) {
                         </td>
                         <td className="table-cell">{formatTime(a4Free[2].time)}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(fourFreeRelayTimes)[1]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1709,7 +1817,7 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(a4Free[4].time)}</td>
-                        <td className="table-cell">Score</td>
+                        <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(fourFreeRelayTimes)[1])}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -1763,7 +1871,7 @@ function handleC4Free(position, time, swimmerName) {
                         </td>
                         <td className="table-cell">{formatTime(b4Free[2].time)}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(fourFreeRelayTimes)[2]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1802,7 +1910,7 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(b4Free[4].time)}</td>
-                        <td className="table-cell">Score</td>
+                        <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(fourFreeRelayTimes)[2])}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -1856,7 +1964,7 @@ function handleC4Free(position, time, swimmerName) {
                         </td>
                         <td className="table-cell">{formatTime(c4Free[2].time)}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Place</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(fourFreeRelayTimes)[3]}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                     </tr>
@@ -1895,7 +2003,7 @@ function handleC4Free(position, time, swimmerName) {
                             </select>
                         </td>
                         <td className="table-cell">{formatTime(c4Free[4].time)}</td>
-                        <td className="table-cell">Score</td>
+                        <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(fourFreeRelayTimes)[3])}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -1934,7 +2042,9 @@ function handleC4Free(position, time, swimmerName) {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreRelays(sortAndPlaceIndividuals(fourFreeRelayTimes)[1])) +
+                                                    parseInt(scoreRelays(sortAndPlaceIndividuals(fourFreeRelayTimes)[2])) + 
+                                                    parseInt(scoreRelays(sortAndPlaceIndividuals(fourFreeRelayTimes)[3]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">Add Score</td>
                         <td className="table-cell">Add Score</td>
