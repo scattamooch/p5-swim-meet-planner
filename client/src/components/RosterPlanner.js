@@ -11,6 +11,7 @@ function RosterPlanner() {
     const [oppTeam, setOppTeam] = useState([])
     const [userTeam, setUserTeam] = useState([])
     const [timeMap, setTimeMap] = useState({})
+    const [userTimeMap, setUserTimeMap] = useState({})
     const [loading, setLoading] = useState(true)
 
     const [free200, setFree200] = useState({1: "", 2: "", 3: "", swimmerName: ""})
@@ -242,7 +243,7 @@ function RosterPlanner() {
         setOppTeam(data);
         createTimeMap(data.swimmer);
         setLoading(false);
-        console.log("Getting: ", data);
+        // console.log("Getting: ", data);
         } else {
         console.log("Could not fetch team");
         }
@@ -250,25 +251,8 @@ function RosterPlanner() {
         console.log("Caught the error: ", error);
         }
     }
-        
-    useEffect(() => { //get ALL teams
-        async function getAllTeams() {
-            try {
-                const response = await fetch ("http://127.0.0.1:5555/teams")
-                if (response.ok) {
-                    const data = await response.json()
-                    setAllTeams(data)
-                    // console.log("All Teams: ", data)
-                } else {
-                    console.log("Could not fetch teams")
-                }
-            } catch (error) {
-                console.log("Caught the error: ", error)
-            }
-        }
-        getAllTeams()
-    }, [])
 
+    // OPP Time Map OPP OPP OPP OPP
     function createTimeMap(swimmers) {
         const swimmerTimes = swimmers.map((swimmer) => {
             return swimmer.times.map((time) => {
@@ -292,6 +276,68 @@ function RosterPlanner() {
         // console.log(swimmerTimeMap)
         setTimeMap(swimmerTimeMap)
     }
+
+    // USER fetch
+    useEffect(() => {
+        async function getUserTeam() {
+            try {
+                const response = await fetch(`http://127.0.0.1:5555/teams/${userTeamId}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setUserTeam(data);
+                    createUserTimeMap(data.swimmer);
+                    // console.log("Getting: ", data);
+                } else {
+                    console.log("Could not fetch team");
+                }
+            } catch (error) {
+                console.log("Caught the error: ", error);
+            }
+        }
+        getUserTeam();
+    }, [userTeamId]);
+
+    // USER time map --> all times for each event rather than all times for each swimmer
+    function createUserTimeMap(swimmers) {
+        const swimmerTimes = swimmers.map((swimmer) => {
+            return swimmer.times.map((time) => {
+                return {
+                    swimmerId: swimmer.id,
+                    swimmerName: swimmer.name,
+                    ...time,
+                }
+            })
+        }).flat()
+        // console.log("swimmerTimes: ", swimmerTimes)
+        const swimmerTimeMap = {}
+        for (const swimmerTime of swimmerTimes) {
+            if (swimmerTime.event_id in swimmerTimeMap) {
+                swimmerTimeMap[swimmerTime.event_id].push(swimmerTime) 
+            } else { 
+                swimmerTimeMap[swimmerTime.event_id] = [swimmerTime]
+            }
+        }
+        console.log(swimmerTimeMap)
+        setUserTimeMap(swimmerTimeMap)
+    }
+        
+    useEffect(() => { //get ALL teams
+        async function getAllTeams() {
+            try {
+                const response = await fetch ("http://127.0.0.1:5555/teams")
+                if (response.ok) {
+                    const data = await response.json()
+                    setAllTeams(data)
+                    // console.log("All Teams: ", data)
+                } else {
+                    console.log("Could not fetch teams")
+                }
+            } catch (error) {
+                console.log("Caught the error: ", error)
+            }
+        }
+        getAllTeams()
+    }, [])
 
     function formatTime(seconds) {
         if (seconds >= 60) {
@@ -350,6 +396,31 @@ function RosterPlanner() {
         }
     }
 
+    async function packageAndSend() {
+        const oppsLineupSnapshot = {
+            medleyTimes, free200, IM200, free50, fly100, free100, free500,
+            twoFreeRelayTimes, back100, breast100, fourFreeRelayTimes, 
+        }
+        const payload = {oppsLineupSnapshot: oppsLineupSnapshot, userTimeMap: userTimeMap,}
+        try {
+            const response = await fetch("/roster-builder", {
+                method: "POST",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+            } else {
+                console.log("Something went wrong: ", response.status)
+            }
+        } catch (error) {
+            console.log("Caught the error: ", error)
+        }
+    }
+
     return (
         <div className="table-container">
             <div>
@@ -362,6 +433,9 @@ function RosterPlanner() {
                         return <option value={team.id} name={team.name}>{team.name}</option>
                     })}
                 </select>
+                <div>
+                    <button onClick={packageAndSend}>Let's Try to Send This Data</button>
+                </div>
             </h3>
             </div>
             {loading ? (
