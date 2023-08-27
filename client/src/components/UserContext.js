@@ -6,6 +6,7 @@ export function UserProvider({children}) {
 
     const [userId, setUserId] = useState(null);
     const [userTeamId, setUserTeamId] = useState(null);
+    const [userName, setUserName] = useState(null);
 
     useEffect(() => {
         async function checkUser() {
@@ -15,9 +16,9 @@ export function UserProvider({children}) {
                     const data = await response.json();
                     setUserId(data.id);
                     setUserTeamId(data.team_id);
-                    // console.log(data);
+                    setUserName(data.first_name);;
                 } else {
-                    // console.log("Who dat? Dat's nobody");
+                    console.log("Error: ", response)
                 }
             } catch (error) {
                 console.log("Error: ", error);
@@ -47,7 +48,7 @@ export function UserProvider({children}) {
 
     return (
 
-        <UserContext.Provider value={{userId, userTeamId, login, logout}}>
+        <UserContext.Provider value={{userId, userTeamId, userName,login, logout}}>
             {children}
         </UserContext.Provider>
     )

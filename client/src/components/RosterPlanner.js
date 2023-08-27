@@ -7,9 +7,9 @@ function RosterPlanner() {
     const {userId, userTeamId} = useUser();
 
     const [allTeams, setAllTeams] = useState([])
-    const [teamSelect, handleTeamSelect] = useState(null)
+    const [teamName, setTeamName] = useState()
     const [oppTeam, setOppTeam] = useState([])
-    const [userTeam, setUserTeam] = useState([])
+    const [userTeam, setUserTeam] = useState({})
     const [timeMap, setTimeMap] = useState({})
     const [userTimeMap, setUserTimeMap] = useState({})
     const [loading, setLoading] = useState(true)
@@ -286,6 +286,7 @@ function RosterPlanner() {
                     const data = await response.json();
                     setUserTeam(data);
                     createUserTimeMap(data.swimmer);
+                    setTeamName(data.name)
                     // console.log("Getting: ", data);
                 } else {
                     console.log("Could not fetch team");
@@ -413,6 +414,8 @@ function RosterPlanner() {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data);
+                setUserTeam(data);
+                // console.log("opps time map: ", timeMap)
             } else {
                 console.log("Something went wrong: ", response.status)
             }
@@ -779,7 +782,7 @@ function RosterPlanner() {
                             <select className="opposing-swimmer-dropdown" value={free200.name} onChange={(e) => handleFree200(1, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
                                 {timeMap[1].map((twoFree) => {
-                                    return <option value={twoFree.time} name={twoFree.swimmerName}>{twoFree.swimmerName}</option>
+                                    return <option id={twoFree.id} value={twoFree.time} name={twoFree.swimmerName}>{twoFree.swimmerName}</option>
                                 })}
                             </select>
                         </td>
