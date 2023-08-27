@@ -12,14 +12,14 @@ import {useHistory} from "react-router-dom"
 
 function MyTeam() {
 
-    const {userId, userTeamId,} = useUser();
+    const {userId, userTeamId, userName} = useUser();
 
     const [userSwimmers, setUserSwimmers] = useState([]);
     const [editMode, setEditMode] = useState(false);
     const [cellChanged, setCellChanged] = useState(false);
     const [cellChanges, setCellChanges] = useState([]);
     const [newSwimmerName, setNewSwimmerName] = useState("");
-    // console.log("User swimmers: ", userSwimmers)
+    const [teamName, setTeamName] = useState();
 
     function toggleEditMode() {
         // console.log("Toggled edit mode")
@@ -33,6 +33,7 @@ function MyTeam() {
                 if (response.ok) {
                     const data = await response.json();
                     setUserSwimmers(data.swimmer);
+                    setTeamName(data.name)
                     // console.log(data);
                 } else {
                     // console.log("Hit the else block")
@@ -246,8 +247,8 @@ function MyTeam() {
         <div className="table-container">
             {userId ? (
                 <div>
-                    <h1>Current user: {userId}</h1>
-                    <h2>Current team: {userTeamId}</h2>
+                    <h1>Current user: {userName}</h1>
+                    <h2>Current team: {teamName}</h2>
                     <div>
 
                         {editMode ? (

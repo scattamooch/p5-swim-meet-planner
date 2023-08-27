@@ -340,21 +340,16 @@ def set_lineup():
         "fly50": 11,
     }
 
-    # Single out opp event, get the times
-    # Single out matching event from userTimeMap
-    # compare all x times to each of the 3 times from the opp event
-    # populate a new list with 3 swimmers FASTER than the other teams times
-    # start over but with the second event, loop 11 time
-
-    user_lineup = {}
+    event_combined_data = {}  # New dictionary to hold combined data
+    
     for event_name, times in opposing_lineup.items():
         if "medley" in event_name.lower() or "relay" in event_name.lower():
             continue
         user_event_times = []
+        opps_data = []
         event_id = event_id_dict[event_name]
         user_team_times = user_time_map.get(str(event_id))
         opps_event_times = times.values()
-        # print(event_id)
 
         for opps_time in opps_event_times:
             fastest_time = 999
@@ -364,24 +359,26 @@ def set_lineup():
             
             for index, user_swimmer in enumerate(user_team_times):
                 user_time = float(user_swimmer.get("time"))
-                # print(opps_time)
-                # print(event_name)
-                # print(user_time)
                 if user_time < fastest_time:
                     fastest_time = user_time
                     fastest_time_index = index
                 if user_time < float(opps_time):
                     user_event_times.append(user_swimmer)
+                    opps_data.append(opps_time)
                     del user_team_times[index]
                     break
                 elif index == len(user_team_times) - 1:
+                    opps_data.append(opps_time)
                     user_event_times.append(user_team_times[fastest_time_index])
                     del user_team_times[fastest_time_index]
 
-        user_lineup[event_id] = user_event_times
+        event_combined_data[event_name] = {
+            "opposing_lineup": opps_data,
+            "user_lineup": user_event_times
+        }
 
     try:
-        return make_response(user_lineup, 200)
+        return make_response(event_combined_data, 200)
     except ValueError as v_error:
         return make_response([str(v_error)], 422)
 
