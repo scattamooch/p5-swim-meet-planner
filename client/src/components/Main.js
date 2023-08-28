@@ -27,9 +27,11 @@ function Main() {
     }, [userTeamId]);
 
     return (
-        <div>
+        <div className="main-container">
+            <div className="greeting-div">
             {userId && <h1>Welcome back, {userName}</h1>}
             {userId && <h2>Current Team: {teamName}</h2>}
+            </div>
             <div className="carousel-component-container">
                 <Carousel />
             </div>

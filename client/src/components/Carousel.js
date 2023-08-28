@@ -10,27 +10,27 @@ function Carousel() {
     const items = [
         {
           title: "",
-          description: "Blah blah",
+          description: "Log in or register to utilize the full functionality of the app!",
           image: "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-network-placeholder-png-image_3416659.jpg"
         },
         {
           title: "",
-          description: "Blah blah",
+          description: "Registering allows you to assign yourself a 'home team'",
           image: "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-network-placeholder-png-image_3416659.jpg"
         },
         {
           title: "",
-          description: "Blah blah",
+          description: "Add swimmers, remove swimmers, edit their times... all in one place",
           image: "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-network-placeholder-png-image_3416659.jpg"
         },
         {
           title: "",
-          description: "Blah blah",
+          description: "Add an entirely new team to mock against if you need to",
           image: "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-network-placeholder-png-image_3416659.jpg"
         },
         {
           title: "",
-          description: "Blah blah",
+          description: "Fire up the roster planner and mock for the best meet sheet possible",
           image: "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-network-placeholder-png-image_3416659.jpg"
         },
       ];

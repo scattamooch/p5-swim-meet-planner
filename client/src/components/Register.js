@@ -53,11 +53,11 @@ function Register() {
     }
 
     return (
-        <div>
-            <h1>Sign Up Here</h1>
-            <form onSubmit={handleSubmit}>
+        <div className="register-master">
+            <h1 className="register-header">Sign Up Here</h1>
+            <form className="register-form" onSubmit={handleSubmit}>
                 <h3>Pick your team:</h3>
-                <select value={teamId} onChange={(event) => setTeamId(event.target.value)}>
+                <select className="register-dropdown" value={teamId} onChange={(event) => setTeamId(event.target.value)}>
                     <option value="" >Team select</option>
                     <option value="1">Charleston</option>
                     <option value="2">Cherry Valley</option>
@@ -66,10 +66,10 @@ function Register() {
                     <option value="5">Fox Hollow</option>
                     <option value="6">Old Orchard</option>
                 </select>
-                <input type="text" placeholder="First name*" onChange={(event) => setFirstName(event.target.value)}/>
-                <input type="text" placeholder="Last name*" onChange={(event) => setLastName(event.target.value)}/>
-                <input type="text" placeholder="Username*" onChange={(event) => setUsername(event.target.value)}/>
-                <input type="password" placeholder="Password*" onChange={(event) => setPassword(event.target.value)}/>
+                <input className="login-register" type="text" placeholder="First name*" onChange={(event) => setFirstName(event.target.value)}/>
+                <input className="login-register" type="text" placeholder="Last name*" onChange={(event) => setLastName(event.target.value)}/>
+                <input className="login-register" type="text" placeholder="Username*" onChange={(event) => setUsername(event.target.value)}/>
+                <input className="login-register" type="password" placeholder="Password*" onChange={(event) => setPassword(event.target.value)}/>
                 <button className="login-button">Submit</button>
             </form>
         </div>
