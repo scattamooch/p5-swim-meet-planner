@@ -345,7 +345,7 @@ def set_lineup():
     for event_name, times in opposing_lineup.items():
         if "medley" in event_name.lower() or "relay" in event_name.lower():
             continue
-        user_event_times = []
+        user_event_times = [{},{},{},{}]
         opps_data = []
         event_id = event_id_dict[event_name]
         user_team_times = user_time_map.get(str(event_id))

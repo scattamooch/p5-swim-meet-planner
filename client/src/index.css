@@ -1,7 +1,25 @@
-:root {
-  --bg: #282c34;
-  --header: #fff;
-  --link: #61dafb;
-  --text: hsla(0, 0%, 100%, 0.88);
+body {
+  background-image: url("https://images.unsplash.com/photo-1558617320-e695f0d420de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+  padding: 0;
+
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #050202; /* Dark text color for readability */
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+}
+
 

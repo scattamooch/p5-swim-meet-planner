@@ -14,14 +14,14 @@ function RosterPlanner() {
     const [userTimeMap, setUserTimeMap] = useState({})
     const [loading, setLoading] = useState(true)
 
-    const [free200, setFree200] = useState({1: "", 2: "", 3: "", swimmerName: ""})
-    const [IM200, setIM200] = useState({1: "", 2: "", 3: "", swimmerName: ""})
-    const [free50, setFree50] = useState({1: "", 2: "", 3: "", swimmerName: ""})
-    const [fly100, setFly100] = useState({1: "", 2: "", 3: "", swimmerName: ""})
-    const [free100, setFree100] = useState({1: "", 2: "", 3: "", swimmerName: ""})
-    const [free500, setFree500] = useState({1: "", 2: "", 3: "", swimmerName: ""})
-    const [back100, setBack100] = useState({1: "", 2: "", 3: "", swimmerName: ""})
-    const [breast100, setBreast100] = useState({1: "", 2: "", 3: "", swimmerName: ""})
+    const [free200, setFree200] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
+    const [IM200, setIM200] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
+    const [free50, setFree50] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
+    const [fly100, setFly100] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
+    const [free100, setFree100] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
+    const [free500, setFree500] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
+    const [back100, setBack100] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
+    const [breast100, setBreast100] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
 
     const initialRelayState = {
         1: { swimmerName: "", time: "" },
@@ -415,6 +415,7 @@ function RosterPlanner() {
                 const data = await response.json();
                 console.log(data);
                 setUserTeam(data);
+                updateEventStateUserSwimmers(data);
                 // console.log("opps time map: ", timeMap)
             } else {
                 console.log("Something went wrong: ", response.status)
@@ -424,9 +425,27 @@ function RosterPlanner() {
         }
     }
 
+    function updateEventStateUserSwimmers(userRoster) {
+        const eventHandlerMap = {free200: setFree200, IM200: setIM200, free50: setFree50, fly100: setFly100,
+                                    free100: setFree100, free500: setFree500, back100: setBack100, breast100: setBreast100}
+        Object.entries(userRoster).forEach(([eventName, swimmerData]) => {
+            if (eventName in eventHandlerMap) {
+            eventHandlerMap[eventName](prevState => ({
+                ...prevState,
+                4: swimmerData.user_lineup[4].time,
+                5: swimmerData.user_lineup[5].time,
+                6: swimmerData.user_lineup[6].time,
+            })
+            )}
+        })
+    }
+
+
+
+    // console.log("User team: ", userTeam)
     return (
         <div className="table-container">
-            <div>
+            <div className="roster-master">
             <h1>Current User: {userId}</h1>
             <h2>Mocking as: Team {userTeamId}</h2>
             <h3>Mock against: 
@@ -444,7 +463,7 @@ function RosterPlanner() {
             {loading ? (
                 <div className="loader">Waiting for team selection...</div>) : (
             <table className="roster-table">
-                <thead>
+                <thead className="table-header">
                     <tr>
                         <th className="column-header">Event</th>
                         <th className="column-header">Swimmers</th>
@@ -774,10 +793,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 1</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.free200?.user_lineup?.[4]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free200)[4]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free200)[4])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.free200?.user_lineup?.[4]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                             <select className="opposing-swimmer-dropdown" value={free200.name} onChange={(e) => handleFree200(1, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -794,10 +813,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 2</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{formatTime(userTeam?.free200?.user_lineup?.[5]?.swimmerName) ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free200)[5]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free200)[5])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.free200?.user_lineup?.[5]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={free200.name} onChange={(e) => handleFree200(2, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -814,10 +833,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 3</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{formatTime(userTeam?.free200?.user_lineup?.[6]?.swimmerName) ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free200)[6]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free200)[6])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.free200?.user_lineup?.[6]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={free200.name} onChange={(e) => handleFree200(3, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -849,7 +868,9 @@ function RosterPlanner() {
                     <tr className="table-row">
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[4])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[5])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[6]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -866,10 +887,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 1</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.IM200?.user_lineup?.[4]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(IM200)[4]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(IM200)[4])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.IM200?.user_lineup?.[4]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={IM200.name} onChange={(e) => handleIM200(1, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -886,10 +907,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 2</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.IM200?.user_lineup?.[5]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(IM200)[5]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(IM200)[5])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.IM200?.user_lineup?.[5]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={IM200.name} onChange={(e) => handleIM200(2, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -906,10 +927,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 3</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.IM200?.user_lineup?.[6]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(IM200)[6]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(IM200)[6])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.IM200?.user_lineup?.[6]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={IM200.name} onChange={(e) => handleIM200(3, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -941,7 +962,9 @@ function RosterPlanner() {
                     <tr className="table-row">
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[4])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[5])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[6]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -958,10 +981,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 1</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.free50?.user_lineup?.[4]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free50)[4]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free50)[4])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.free50?.user_lineup?.[4]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={free50.name} onChange={(e) => handleFree50(1, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -978,10 +1001,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 2</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.free50?.user_lineup?.[5]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free50)[5]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free50)[5])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.free50?.user_lineup?.[5]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={free50.name} onChange={(e) => handleFree50(2, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -998,10 +1021,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 3</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.free50?.user_lineup?.[6]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free50)[6]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free50)[6])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.free50?.user_lineup?.[6]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={free50.name} onChange={(e) => handleFree50(3, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1033,7 +1056,9 @@ function RosterPlanner() {
                     <tr className="table-row">
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[4])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[5])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[6]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -1050,10 +1075,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 1</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.fly100?.user_lineup?.[4]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(fly100)[4]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(fly100)[4])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.fly100?.user_lineup?.[4]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={fly100.name} onChange={(e) => handleFly100(1, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1070,10 +1095,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 2</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                    <td className="table-cell">{userTeam?.fly100?.user_lineup?.[5]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(fly100)[5]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(fly100)[5])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.fly100?.user_lineup?.[5]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={fly100.name} onChange={(e) => handleFly100(2, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1090,10 +1115,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 3</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.fly100?.user_lineup?.[6]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(fly100)[6]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(fly100)[6])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.fly100?.user_lineup?.[6]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={fly100.name} onChange={(e) => handleFly100(3, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1125,7 +1150,9 @@ function RosterPlanner() {
                     <tr className="table-row">
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[4])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[5])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[6]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -1142,10 +1169,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 1</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.free100?.user_lineup?.[4]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free100)[4]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free100)[4])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.free100?.user_lineup?.[4]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={free100.name} onChange={(e) => handleFree100(1, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1162,10 +1189,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 2</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.free100?.user_lineup?.[5]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free100)[5]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free100)[5])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.free100?.user_lineup?.[5]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={free100.name} onChange={(e) => handleFree100(2, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1182,10 +1209,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 3</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.free100?.user_lineup?.[6]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free100)[6]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free100)[6])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.free100?.user_lineup?.[6]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={free100.name} onChange={(e) => handleFree100(3, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1217,7 +1244,9 @@ function RosterPlanner() {
                     <tr className="table-row">
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[4])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[5])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[6]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -1234,10 +1263,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 1</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.free500?.user_lineup?.[4]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free500)[4]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free500)[4])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.free500?.user_lineup?.[4]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={free500.name} onChange={(e) => handleFree500(1, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1254,10 +1283,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 2</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.free500?.user_lineup?.[5]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free500)[5]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free500)[5])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.free500?.user_lineup?.[5]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={free500.name} onChange={(e) => handleFree500(2, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1274,10 +1303,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 3</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.free500?.user_lineup?.[6]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(free500)[6]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free500)[6])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.free500?.user_lineup?.[6]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={free500.name} onChange={(e) => handleFree500(3, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1309,7 +1338,9 @@ function RosterPlanner() {
                     <tr className="table-row">
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[4])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[5])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[6]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -1637,10 +1668,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 1</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.back100?.user_lineup?.[4]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(back100)[4]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(back100)[4])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.back100?.user_lineup?.[4]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={back100.name} onChange={(e) => handleBack100(1, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1657,10 +1688,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 2</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                    <td className="table-cell">{userTeam?.back100?.user_lineup?.[5]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(back100)[5]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(back100)[5])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.back100?.user_lineup?.[5]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={back100.name} onChange={(e) => handleBack100(2, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1677,10 +1708,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 3</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.back100?.user_lineup?.[6]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(back100)[6]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(back100)[6])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.back100?.user_lineup?.[6]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={breast100.name} onChange={(e) => handleBack100(3, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1712,7 +1743,9 @@ function RosterPlanner() {
                     <tr className="table-row">
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[4])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[5])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[6]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
@@ -1729,10 +1762,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 1</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.breast100?.user_lineup?.[4]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(breast100)[4]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(breast100)[4])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.breast100?.user_lineup?.[4]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={breast100.name} onChange={(e) => handleBreast100(1, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1749,10 +1782,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 2</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                        <td className="table-cell">{userTeam?.breast100?.user_lineup?.[5]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(breast100)[5]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(breast100)[5])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.breast100?.user_lineup?.[5]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={breast100.name} onChange={(e) => handleBreast100(2, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1769,10 +1802,10 @@ function RosterPlanner() {
                     </tr>
 
                     <tr className="table-row">
-                        <td className="table-cell">Swimmer 3</td>
-                        <td className="table-cell">Place</td>
-                        <td className="table-cell">Score</td>
-                        <td className="table-cell">Time</td>
+                    <td className="table-cell">{userTeam?.breast100?.user_lineup?.[6]?.swimmerName ?? "Waiting..."}</td>
+                        <td className="table-cell">{sortAndPlaceIndividuals(breast100)[6]}</td>
+                        <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(breast100)[6])}</td>
+                        <td className="table-cell">{formatTime(userTeam?.breast100?.user_lineup?.[6]?.time) ?? "Waiting..."}</td>
                         <td className="table-cell">
                         <select className="opposing-swimmer-dropdown" value={breast100.name} onChange={(e) => handleBreast100(3, e.target.value, e.target.name)}>
                                 <option value="">Pick a swimmer</option>
@@ -1804,7 +1837,9 @@ function RosterPlanner() {
                     <tr className="table-row">
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
+                        <td className="table-cell">+{parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[4])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[5])) + 
+                                                    parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[6]))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
