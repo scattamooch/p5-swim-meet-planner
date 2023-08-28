@@ -3,7 +3,7 @@
     justify-content: space-between;
     align-items: center;
     height: 85px;
-    background-color: #333; 
+    background-color: #ffffff65; 
     color: #fff;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5); 
   }
@@ -16,16 +16,17 @@
   .nav-links {
     padding: 10px 20px;
     margin-right: 10px;
-    background-color: transparent;
-    color: #fff;
+    background-color: #ffffff3b;
+    color: #080808;
     text-decoration: none;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
+    font-size: 18px;
   }
   
   .nav-links:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgb(255, 255, 255);
     border-radius: 4px;
   }
   
@@ -43,8 +44,9 @@
     padding: 10px 20px;
     margin-right: 10px;
     background-color: transparent;
-    color: #fff;
+    color: #070000;
     text-decoration: none;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
     border: 1px solid #fff;
     border-radius: 4px;
     cursor: pointer;
@@ -52,7 +54,8 @@
   }
   
   .auth-link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgb(255, 255, 255);
+    border-radius: 4px;
   }
   
 

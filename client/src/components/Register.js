@@ -44,7 +44,7 @@ function Register() {
                 history.push("/");
             } else {
                 console.log("Registration failed: ", response.status)
-                setSignUpError("An error occurred during registration")
+                setSignUpError("An error occurred during registration", response.status)
             }
         } catch (error) {
             console.log("Error during registration: ", error)
@@ -54,6 +54,9 @@ function Register() {
 
     return (
         <div className="register-master">
+            {signUpError ? (
+              <h2 className="register-error">{signUpError}</h2>
+            ) : null}
             <h1 className="register-header">Sign Up Here</h1>
             <form className="register-form" onSubmit={handleSubmit}>
                 <h3>Pick your team:</h3>
@@ -66,11 +69,11 @@ function Register() {
                     <option value="5">Fox Hollow</option>
                     <option value="6">Old Orchard</option>
                 </select>
-                <input className="login-register" type="text" placeholder="First name*" onChange={(event) => setFirstName(event.target.value)}/>
-                <input className="login-register" type="text" placeholder="Last name*" onChange={(event) => setLastName(event.target.value)}/>
-                <input className="login-register" type="text" placeholder="Username*" onChange={(event) => setUsername(event.target.value)}/>
-                <input className="login-register" type="password" placeholder="Password*" onChange={(event) => setPassword(event.target.value)}/>
-                <button className="login-button">Submit</button>
+                <input className="register-input" type="text" placeholder="First name*" onChange={(event) => setFirstName(event.target.value)}/>
+                <input className="register-input" type="text" placeholder="Last name*" onChange={(event) => setLastName(event.target.value)}/>
+                <input className="register-input" type="text" placeholder="Username*" onChange={(event) => setUsername(event.target.value)}/>
+                <input className="register-input" type="password" placeholder="Password*" onChange={(event) => setPassword(event.target.value)}/>
+                <button className="register-button">Submit</button>
             </form>
         </div>
     )

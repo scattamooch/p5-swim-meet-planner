@@ -4,7 +4,7 @@ import { useUser } from "./UserContext";
 
 function RosterPlanner() {
 
-    const {userId, userTeamId} = useUser();
+    const {userId, userTeamId, userTeamName} = useUser();
 
     const [allTeams, setAllTeams] = useState([])
     const [teamName, setTeamName] = useState()
@@ -447,7 +447,7 @@ function RosterPlanner() {
         <div className="table-container">
             <div className="roster-master">
             <h1>Current User: {userId}</h1>
-            <h2>Mocking as: Team {userTeamId}</h2>
+            <h2>Mocking as: {userTeamId}</h2>
             <h3>Mock against: 
                 <select className="opp-select" onChange={(e) => getOppTeam(e.target.value)}>
                     <option value="">Pick a team</option>
@@ -456,7 +456,7 @@ function RosterPlanner() {
                     })}
                 </select>
                 <div>
-                    <button onClick={packageAndSend}>Let's Try to Send This Data</button>
+                    <button className="send-opp-lineup" onClick={packageAndSend}>Let's Try to Send This Data</button>
                 </div>
             </h3>
             </div>

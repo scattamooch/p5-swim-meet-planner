@@ -10,13 +10,15 @@
 .roster-table {
     border-collapse: collapse;
     margin: auto;
-    margin-top: 100px;
+    margin-top: 600px;
 }
 
 .column-header, .table-cell {
     padding: 10px 20px;
     text-align: center;
     background-color: #f2f2f2;
+    position: sticky;
+    top: 0;
 }
 
 .table-cell {
@@ -33,7 +35,61 @@
     height: 20px;
   }
 
-/* .edit-swimmer-time {
-    width: 50px;
-    height: 20px;
-}  */
+.roster-master {
+    max-width: 600px;
+    margin: auto; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffffb0;
+    text-align: center;
+}
+
+.opp-select {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.send-opp-lineup {
+    width: 100%;
+    padding: 10px;
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out; 
+}
+
+.send-opp-lineup:hover {
+    background-color: #2980b9;
+}
+
+.loader {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -500%); 
+    padding: 10px;
+    background-color: #ffffffb0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+    font-family: 'Roboto', sans-serif;
+}
+
+.roster-table th {
+    position: sticky ;
+    top: 0 ;
+}
