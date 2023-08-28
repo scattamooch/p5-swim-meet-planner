@@ -33,16 +33,17 @@
   align-items: center;
   justify-content: center;
   height: 490px;
-  background-color: #fff;
+  background-color: #ffffff79;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   }
   
   .carousel-item-text {
     font-size: 1.15rem;
+    font-family: 'Roboto', sans-serif;
     margin: 40px 0 40px 0;
     padding: 0 20px 0 20px;
     white-space: normal;
-    color: #617d98
+    color: #000000
   }
   
   .carousel-buttons {

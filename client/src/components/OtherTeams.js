@@ -88,7 +88,7 @@ function OtherTeams() {
 
     return (
         <div>
-            <div className="container-name">
+            <div className="other-team-container">
             <h1 className="opps-headers">Team Tables</h1>
                 <select className="team-view-select" onChange={(e) => getSwimmers(e.target.value)}>
                     <option value="">Pick a team</option>
