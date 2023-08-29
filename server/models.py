@@ -65,13 +65,11 @@ class Time(db.Model, SerializerMixin):
     @validates("time")
     def validates_time(self, key, new_time):
         if not new_time:
-            new_time = "0.00"
-        elif len(new_time) > 8:
+            new_time = 0.00
+        elif float(new_time) > 1000:
             raise ValueError("Time must be submitted in total seconds. Time can have 3 digits before the decimal, and 2 digits after.")
-        parts = new_time.split('.')
-        if len(parts) != 2 or len(parts[0]) > 3 or len(parts[1]) > 2:
-            raise ValueError("Time must be submitted in total seconds. Time can have 3 digits before the decimal, and 2 digits after.")
-    
+
+        new_time = round(float(new_time), 2)
         return new_time
    
 class User(db.Model, SerializerMixin):
@@ -103,6 +101,13 @@ class User(db.Model, SerializerMixin):
     swimmers = association_proxy("team", "swimmer")
 
     #validations
+    @validates("team_id")
+    def validates_team(self, key, new_team_id):
+        if not new_team_id:
+            raise ValueError("A user must be affiliated with a team")
+        else:
+            return new_team_id
+
     @validates("first_name")
     def validates_first_name(self, key, new_first_name):
         if not new_first_name:

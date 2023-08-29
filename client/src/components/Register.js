@@ -43,12 +43,13 @@ function Register() {
                 handleLogin(data);
                 history.push("/");
             } else {
+                const responseData = await response.json();
+                const errorMessage = responseData.Errors[0];
                 console.log("Registration failed: ", response.status)
-                setSignUpError("An error occurred during registration", response.status)
+                setSignUpError(errorMessage);
             }
         } catch (error) {
-            console.log("Error during registration: ", error)
-            setSignUpError("An error occurred during registration")
+            console.log("Caught an error: ", error)
         }
     }
 
