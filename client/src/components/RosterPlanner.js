@@ -14,14 +14,19 @@ function RosterPlanner() {
     const [userTimeMap, setUserTimeMap] = useState({})
     const [loading, setLoading] = useState(true)
 
-    const [free200, setFree200] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
-    const [IM200, setIM200] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
-    const [free50, setFree50] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
-    const [fly100, setFly100] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
-    const [free100, setFree100] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
-    const [free500, setFree500] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
-    const [back100, setBack100] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
-    const [breast100, setBreast100] = useState({1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""})
+    const initialIndividualState = {1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""}
+
+    const [free200, setFree200] = useState({...initialIndividualState})
+    const [IM200, setIM200] = useState({...initialIndividualState})
+    const [free50, setFree50] = useState({...initialIndividualState})
+    const [fly100, setFly100] = useState({...initialIndividualState})
+    const [free100, setFree100] = useState({...initialIndividualState})
+    const [free500, setFree500] = useState({...initialIndividualState})
+    const [back100, setBack100] = useState({...initialIndividualState})
+    const [breast100, setBreast100] = useState({...initialIndividualState})
+
+    // const [userScoreAfterMedleys, setUserScoreAfterMedleys] = useState()
+    // const [userScore200Free, setUserScore200Free] = useState()
 
     const initialRelayState = {
         1: { swimmerName: "", time: "" },
@@ -254,6 +259,8 @@ function RosterPlanner() {
 
     // OPP Time Map OPP OPP OPP OPP
     function createTimeMap(swimmers) {
+        const loginWarning = window.confirm("Without being signed in, you can choose swimmers for the opposing side of the table, but you can not mock against them. Submitting the opposing data will do nothing. Otherwise, if you are logged in, set the opposing teams lineup, submit it, and the best possible lineup will be generated for your team.")
+
         const swimmerTimes = swimmers.map((swimmer) => {
             return swimmer.times.map((time) => {
                 return {
@@ -456,13 +463,13 @@ function RosterPlanner() {
                     })}
                 </select>
                 <div>
-                    <button className="send-opp-lineup" onClick={packageAndSend}>Let's Try to Send This Data</button>
+                    <button className="send-opp-lineup" onClick={packageAndSend}>Send Opposing Data</button>
                 </div>
             </h3>
             </div>
             {loading ? (
                 <div className="loader">Waiting for team selection...</div>) : (
-            <table className="roster-table">
+            <table className="roster-table sticky">
                 <thead className="table-header">
                     <tr>
                         <th className="column-header">Event</th>

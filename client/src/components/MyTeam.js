@@ -209,8 +209,8 @@ function MyTeam() {
                     ))}
                     {editMode && (
                         <td>
-                            <button onClick={() => handleDeleteRow(swimmer.swimmerId)}>
-                                Delete Row
+                            <button className="delete-swimmer" onClick={() => handleDeleteRow(swimmer.swimmerId)}>
+                                Delete
                             </button>
                         </td>
                     )}
@@ -254,14 +254,14 @@ function MyTeam() {
                     <div>
 
                         {editMode ? (
-                            <button onClick={toggleEditMode}>Cancel Changes</button>
+                            <button className="edit-buttons" onClick={toggleEditMode}>Cancel Changes</button>
                         ) : (
-                            <button onClick={toggleEditMode}>Edit Mode</button>)}
+                            <button className="edit-buttons" onClick={toggleEditMode}>Edit Mode</button>)}
 
-                        {editMode && (<button onClick={patchRequests}>Save Changes</button>)}
+                        {editMode && (<button className="edit-buttons" onClick={patchRequests}>Save Changes</button>)}
 
                     </div>
-                    <h3>Swimmer Table</h3>
+                    <h3 style={{textAlign: "center", fontSize: "30px"}}>Swimmer Table</h3>
                     <table>
                         <thead>
                             <tr>

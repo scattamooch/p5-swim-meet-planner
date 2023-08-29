@@ -63,3 +63,20 @@ table {
     transform: scale(1.1);
     transition: transform 0.3s ease-in-out;
 }
+
+.edit-buttons {
+    width: 10%;
+    padding: 10px;
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+     
+}
+
+.edit-buttons:hover {
+    background-color: #2980b9;
+}
