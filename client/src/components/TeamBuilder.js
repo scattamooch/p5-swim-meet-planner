@@ -3,6 +3,8 @@ import "../styling/TeamBuilder.css"
 
 function TeamBuilder() {
 
+    
+
     return (
         <div>
             One-stop teambuilder. I'm picturing a table with 12 columns and 10 rows.

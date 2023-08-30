@@ -13,6 +13,8 @@ function RosterPlanner() {
     const [timeMap, setTimeMap] = useState({})
     const [userTimeMap, setUserTimeMap] = useState({})
     const [loading, setLoading] = useState(true)
+    const [ourScore, setOurScore] = useState(0)
+    const [theirScore, setTheirScore] = useState(0)
 
     const initialIndividualState = {1: "", 2: "", 3: "", 4: "", 5: "", 6: "", swimmerName: ""}
 
@@ -423,6 +425,7 @@ function RosterPlanner() {
                 console.log(data);
                 setUserTeam(data);
                 updateEventStateUserSwimmers(data);
+                // ourTotalScore();
                 // console.log("opps time map: ", timeMap)
             } else {
                 console.log("Something went wrong: ", response.status)
@@ -447,8 +450,41 @@ function RosterPlanner() {
         })
     }
 
+    // function calculateTotalScore(...numbers) {
+    //     return numbers.reduce((total, num) => total + num, 0);
+    // }
 
+    useEffect(() => { //user score
+        const ourTotalScore = 
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[4])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[5])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[6])) +
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[4])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[5])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[6])) +
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[4])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[5])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[6])) +
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[4])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[5])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[6])) +
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[4])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[5])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[6])) +
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[4])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[5])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[6])) +
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[4])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[5])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[6])) +
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[4])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[5])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[6]));
 
+            setOurScore(ourTotalScore);
+            console.log(ourTotalScore);
+        }, [free200, IM200, free50, fly100, free100, free500, back100, breast100]);
+
+        useEffect(() => { //opps score
+            const theirTotalScore = 
+                parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[3])) +
+                parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[3])) +
+                parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[3])) +
+                parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[3])) +
+                parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[3])) +
+                parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[3])) +
+                parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[3])) +
+                parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[3]));
+    
+                setTheirScore(theirTotalScore);
+                console.log(theirTotalScore);
+            }, [free200, IM200, free50, fly100, free100, free500, back100, breast100]);
+    
+            
     // console.log("User team: ", userTeam)
     return (
         <div className="table-container">
@@ -466,6 +502,18 @@ function RosterPlanner() {
                     <button className="send-opp-lineup" onClick={packageAndSend}>Send Opposing Data</button>
                 </div>
             </h3>
+            </div>
+            <div className="score-cards">
+            {!loading && (
+            <div className="our-score">
+                {ourScore}
+            </div>
+                )}
+                {!loading && (
+            <div className="their-score">
+                {theirScore}
+            </div>
+                )}
             </div>
             {loading ? (
                 <div className="loader">Waiting for team selection...</div>) : (

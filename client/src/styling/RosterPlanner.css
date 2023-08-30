@@ -91,3 +91,25 @@
     position: sticky ;
     top: 0 ;
 }
+
+.our-score, .their-score {
+    max-width: 200px; 
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffffb0;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+}
+
+.our-score {
+    left: 125px; 
+}
+
+.their-score {
+    right: 125px; 
+}
