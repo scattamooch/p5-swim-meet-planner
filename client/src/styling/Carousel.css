@@ -1,6 +1,6 @@
 .carousel-image {
-    height: 200px;
-    width: 200px;
+    height: 400px;
+    width: 400px;
   }
   
   .carousel-component-container {
@@ -49,7 +49,20 @@
   .carousel-buttons {
     display: flex;
     justify-content: space-evenly;
+    background-color: #ffffffb0;
   }
+
+  /* max-width: 200px; 
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffffb0;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px; */
   
   .arrow-buttons {
     background: none;
@@ -80,5 +93,5 @@
   }
   
   .indicator-symbol-active {
-    color: rgb(219, 109, 128);
+    color: blue;
   }

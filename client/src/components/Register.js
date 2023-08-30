@@ -58,7 +58,7 @@ function Register() {
             {signUpError ? (
               <h2 className="register-error">{signUpError}</h2>
             ) : null}
-            <h1 className="register-header">Sign Up Here</h1>
+            {/* <h1 className="register-header">Sign Up Here</h1> */}
             <form className="register-form" onSubmit={handleSubmit}>
                 <h3>Pick your team:</h3>
                 <select className="register-dropdown" value={teamId} onChange={(event) => setTeamId(event.target.value)}>

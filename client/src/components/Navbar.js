@@ -16,7 +16,7 @@ function Navbar() {
         <div className="nav-bar-container">
           <div className="nav-links-container">
             <NavLink exact to="/" className="nav-links">Home</NavLink>
-            <NavLink exact to="/team-builder" className="nav-links">Team Builder</NavLink>
+            {/* <NavLink exact to="/team-builder" className="nav-links">Team Builder</NavLink> */}
             <NavLink exact to="/roster-planner" className="nav-links">Roster Planner</NavLink>
             <NavLink exact to="/my-team" className="nav-links">My Team</NavLink>
             <NavLink exact to="/other-teams" className="nav-links">Other Teams</NavLink>
