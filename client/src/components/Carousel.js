@@ -11,27 +11,27 @@ function Carousel() {
         {
           title: "",
           description: "Log in or register to utilize the full functionality of the app!",
-          image: "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-network-placeholder-png-image_3416659.jpg"
+          image: "https://swimswam.com/wp-content/uploads/2014/06/Santa-Clara-Grand-Prix-by-Mike-Lewis.jpg"
         },
         {
           title: "",
           description: "Registering allows you to assign yourself a 'home team'",
-          image: "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-network-placeholder-png-image_3416659.jpg"
+          image: "https://vmrw8k5h.tinifycdn.com/news/wp-content/uploads/2016/05/Fort-Lauderdale-Pools-1.png"
         },
         {
           title: "",
           description: "Add swimmers, remove swimmers, edit their times... all in one place",
-          image: "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-network-placeholder-png-image_3416659.jpg"
+          image: "https://swimswam.com/wp-content/uploads/2013/04/Greensboro-Aquatic-Center-614x520.png"
         },
         {
           title: "",
           description: "Add an entirely new team to mock against if you need to",
-          image: "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-network-placeholder-png-image_3416659.jpg"
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQziZogOTod1xXJt8hFL4xWkc2ZsBcbh7yW4g&usqp=CAU"
         },
         {
           title: "",
           description: "Fire up the roster planner and mock for the best meet sheet possible",
-          image: "https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-network-placeholder-png-image_3416659.jpg"
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVJ0IxqjEXE0xPPOi6miei8vSfSQnn9lUK6g&usqp=CAU"
         },
       ];
 
