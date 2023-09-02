@@ -466,23 +466,23 @@ function RosterPlanner() {
             parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[4])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[5])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[6]));
 
             setOurScore(ourTotalScore);
-            console.log(ourTotalScore);
+            // console.log(ourTotalScore);
         }, [free200, IM200, free50, fly100, free100, free500, back100, breast100]);
 
-        useEffect(() => { //opps score
-            const theirTotalScore = 
-                parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[3])) +
-                parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[3])) +
-                parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[3])) +
-                parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[3])) +
-                parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[3])) +
-                parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[3])) +
-                parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[3])) +
-                parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[3]));
-    
-                setTheirScore(theirTotalScore);
-                console.log(theirTotalScore);
-            }, [free200, IM200, free50, fly100, free100, free500, back100, breast100]);
+    useEffect(() => { //opps score
+        const theirTotalScore = 
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[3])) +
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[3])) +
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[3])) +
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[3])) +
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[3])) +
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[3])) +
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[3])) +
+            parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[1])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[2])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[3]));
+
+            setTheirScore(theirTotalScore);
+            // console.log(theirTotalScore);
+        }, [free200, IM200, free50, fly100, free100, free500, back100, breast100]);
     
             
     // console.log("User team: ", userTeam)
@@ -529,7 +529,6 @@ function RosterPlanner() {
                         <th className="column-header">Their Times</th>
                         <th className="column-header">Score</th>
                         <th className="column-header">Pl</th>
-                        <th className="column-header" colSpan="2">Scoring</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -554,8 +553,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(aMedley[1].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">We</td>
-                        <td className="table-cell">They</td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -574,8 +572,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(aMedley[2].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">{sortAndPlaceIndividuals(medleyTimes)[1]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -594,8 +591,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(aMedley[3].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -614,8 +610,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(aMedley[4].time)}</td>
                         <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(medleyTimes)[1])}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -627,8 +622,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(parseFloat(aMedley[1].time) + parseFloat(aMedley[2].time) + parseFloat(aMedley[3].time) + parseFloat(aMedley[4].time))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -647,8 +641,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(bMedley[1].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -667,8 +660,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(bMedley[2].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">{sortAndPlaceIndividuals(medleyTimes)[2]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -687,8 +679,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(bMedley[3].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -707,8 +698,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(bMedley[4].time)}</td>
                         <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(medleyTimes)[2])}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -720,8 +710,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(parseFloat(bMedley[1].time) + parseFloat(bMedley[2].time) + parseFloat(bMedley[3].time) + parseFloat(bMedley[4].time))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -740,8 +729,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(cMedley[1].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -760,8 +748,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(cMedley[2].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">{sortAndPlaceIndividuals(medleyTimes)[3]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -780,8 +767,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(cMedley[3].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -800,8 +786,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(cMedley[4].time)}</td>
                         <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(medleyTimes)[3])}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -813,8 +798,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(parseFloat(cMedley[1].time) + parseFloat(cMedley[2].time) + parseFloat(cMedley[3].time) + parseFloat(cMedley[4].time))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -826,8 +810,7 @@ function RosterPlanner() {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -839,8 +822,7 @@ function RosterPlanner() {
                         <td className="table-cell"></td>
                         <td className="table-cell">+{parseInt(scoreRelays(sortAndPlaceIndividuals(medleyTimes)[1])) + parseInt(scoreRelays(sortAndPlaceIndividuals(medleyTimes)[2])) + parseInt(scoreRelays(sortAndPlaceIndividuals(medleyTimes)[3]))}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
-                        <td className="table-cell">Add Score</td>
+                        
                     </tr>
                     
                     <tr className="table-row">
@@ -863,8 +845,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(free200[1])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free200)[1])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(free200)[1]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -883,8 +864,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(free200[2])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free200)[2])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(free200)[2]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -903,8 +883,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(free200[3])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free200)[3])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(free200)[3]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -916,8 +895,7 @@ function RosterPlanner() {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -933,8 +911,7 @@ function RosterPlanner() {
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[2])) + 
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[3]))}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
-                        <td className="table-cell">Add Score</td>
+                        
                     </tr>
 
                     <tr className="table-row">
@@ -957,8 +934,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(IM200[1])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(IM200)[1])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(IM200)[1]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -977,8 +953,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(IM200[2])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(IM200)[2])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(IM200)[2]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -997,8 +972,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(IM200[3])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(IM200)[3])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(IM200)[3]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1010,8 +984,7 @@ function RosterPlanner() {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1027,8 +1000,7 @@ function RosterPlanner() {
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[2])) + 
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(IM200)[3]))}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
-                        <td className="table-cell">Add Score</td>
+                        
                     </tr>
 
                     <tr className="table-row">
@@ -1051,8 +1023,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(free50[1])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free50)[1])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(free50)[1]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1071,8 +1042,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(free50[2])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free50)[2])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(free50)[2]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1091,8 +1061,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(free50[3])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free50)[3])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(free50)[3]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1104,8 +1073,7 @@ function RosterPlanner() {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1121,8 +1089,7 @@ function RosterPlanner() {
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[2])) + 
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(free50)[3]))}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
-                        <td className="table-cell">Add Score</td>
+                        
                     </tr>
 
                     <tr className="table-row">
@@ -1145,8 +1112,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(fly100[1])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(fly100)[1])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(fly100)[1]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1165,8 +1131,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(fly100[2])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(fly100)[2])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(fly100)[2]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1185,8 +1150,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(fly100[3])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(fly100)[3])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(fly100)[3]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1198,8 +1162,7 @@ function RosterPlanner() {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1215,8 +1178,7 @@ function RosterPlanner() {
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[2])) + 
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(fly100)[3]))}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
-                        <td className="table-cell">Add Score</td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1239,8 +1201,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(free100[1])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free100)[1])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(free100)[1]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1259,8 +1220,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(free100[2])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free100)[2])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(free100)[2]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1279,8 +1239,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(free100[3])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free100)[3])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(free100)[3]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1292,8 +1251,7 @@ function RosterPlanner() {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1309,8 +1267,7 @@ function RosterPlanner() {
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[2])) + 
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(free100)[3]))}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
-                        <td className="table-cell">Add Score</td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1333,8 +1290,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(free500[1])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free500)[1])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(free500)[1]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1353,8 +1309,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(free500[2])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free500)[2])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(free500)[2]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1373,8 +1328,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(free500[3])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(free500)[3])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(free500)[3]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1386,8 +1340,7 @@ function RosterPlanner() {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1403,8 +1356,7 @@ function RosterPlanner() {
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[2])) + 
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(free500)[3]))}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
-                        <td className="table-cell">Add Score</td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1427,8 +1379,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(a2Free[1].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1447,8 +1398,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(a2Free[2].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">{sortAndPlaceIndividuals(twoFreeRelayTimes)[1]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1467,8 +1417,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(a2Free[3].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1487,8 +1436,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(a2Free[4].time)}</td>
                         <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(twoFreeRelayTimes)[1])}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1500,8 +1448,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(parseFloat(a2Free[1].time) + parseFloat(a2Free[2].time) + parseFloat(a2Free[3].time) + parseFloat(a2Free[4].time))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1520,8 +1467,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(b2Free[1].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1540,8 +1486,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(b2Free[2].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">{sortAndPlaceIndividuals(twoFreeRelayTimes)[2]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1560,8 +1505,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(b2Free[3].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1580,8 +1524,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(b2Free[4].time)}</td>
                         <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(twoFreeRelayTimes)[2])}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1593,8 +1536,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(parseFloat(b2Free[1].time) + parseFloat(b2Free[2].time) + parseFloat(b2Free[3].time) + parseFloat(b2Free[4].time))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1613,8 +1555,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(c2Free[1].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1633,8 +1574,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(c2Free[2].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">{sortAndPlaceIndividuals(twoFreeRelayTimes)[3]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1653,8 +1593,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(c2Free[3].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1673,8 +1612,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(c2Free[4].time)}</td>
                         <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(twoFreeRelayTimes)[3])}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1686,8 +1624,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(parseFloat(c2Free[1].time) + parseFloat(c2Free[2].time) + parseFloat(c2Free[3].time) + parseFloat(c2Free[4].time))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1699,8 +1636,7 @@ function RosterPlanner() {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1714,8 +1650,7 @@ function RosterPlanner() {
                                                     parseInt(scoreRelays(sortAndPlaceIndividuals(twoFreeRelayTimes)[2])) + 
                                                     parseInt(scoreRelays(sortAndPlaceIndividuals(twoFreeRelayTimes)[3]))}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
-                        <td className="table-cell">Add Score</td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1738,8 +1673,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(back100[1])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(back100)[1])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(back100)[1]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1758,8 +1692,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(back100[2])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(back100)[2])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(back100)[2]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1778,8 +1711,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(back100[3])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(back100)[3])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(back100)[3]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1791,8 +1723,7 @@ function RosterPlanner() {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1808,8 +1739,7 @@ function RosterPlanner() {
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[2])) + 
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(back100)[3]))}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
-                        <td className="table-cell">Add Score</td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1832,8 +1762,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(breast100[1])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(breast100)[1])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(breast100)[1]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1852,8 +1781,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(breast100[2])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(breast100)[2])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(breast100)[2]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1872,8 +1800,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(breast100[3])}</td>
                         <td className="table-cell">{scoreIndividuals(sortAndPlaceIndividuals(breast100)[3])}</td>
                         <td className="table-cell">{sortAndPlaceIndividuals(breast100)[3]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1885,8 +1812,7 @@ function RosterPlanner() {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1902,8 +1828,7 @@ function RosterPlanner() {
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[2])) + 
                                                     parseInt(scoreIndividuals(sortAndPlaceIndividuals(breast100)[3]))}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
-                        <td className="table-cell">Add Score</td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1926,8 +1851,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(a4Free[1].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1946,8 +1870,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(a4Free[2].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">{sortAndPlaceIndividuals(fourFreeRelayTimes)[1]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1966,8 +1889,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(a4Free[3].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1986,8 +1908,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(a4Free[4].time)}</td>
                         <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(fourFreeRelayTimes)[1])}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -1999,8 +1920,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(parseFloat(a4Free[1].time) + parseFloat(a4Free[2].time) + parseFloat(a4Free[3].time) + parseFloat(a4Free[4].time))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -2019,8 +1939,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(b4Free[1].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -2039,8 +1958,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(b4Free[2].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">{sortAndPlaceIndividuals(fourFreeRelayTimes)[2]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -2059,8 +1977,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(b4Free[3].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -2079,8 +1996,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(b4Free[4].time)}</td>
                         <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(fourFreeRelayTimes)[2])}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -2092,8 +2008,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(parseFloat(b4Free[1].time) + parseFloat(b4Free[2].time) + parseFloat(b4Free[3].time) + parseFloat(b4Free[4].time))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -2112,8 +2027,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(c4Free[1].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -2132,8 +2046,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(c4Free[2].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell">{sortAndPlaceIndividuals(fourFreeRelayTimes)[3]}</td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -2152,8 +2065,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(c4Free[3].time)}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -2172,8 +2084,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(c4Free[4].time)}</td>
                         <td className="table-cell">{scoreRelays(sortAndPlaceIndividuals(fourFreeRelayTimes)[3])}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -2185,8 +2096,7 @@ function RosterPlanner() {
                         <td className="table-cell">{formatTime(parseFloat(c4Free[1].time) + parseFloat(c4Free[2].time) + parseFloat(c4Free[3].time) + parseFloat(c4Free[4].time))}</td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -2198,8 +2108,7 @@ function RosterPlanner() {
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
                         <td className="table-cell"></td>
-                        <td className="table-cell"></td>
-                        <td className="table-cell"></td>
+
                     </tr>
 
                     <tr className="table-row">
@@ -2213,8 +2122,7 @@ function RosterPlanner() {
                                                     parseInt(scoreRelays(sortAndPlaceIndividuals(fourFreeRelayTimes)[2])) + 
                                                     parseInt(scoreRelays(sortAndPlaceIndividuals(fourFreeRelayTimes)[3]))}</td>
                         <td className="table-cell"></td>
-                        <td className="table-cell">Add Score</td>
-                        <td className="table-cell">Add Score</td>
+
                     </tr>
 
                 </tbody>

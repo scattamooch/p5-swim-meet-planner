@@ -21,6 +21,7 @@ function MyTeam() {
     const [newSwimmerName, setNewSwimmerName] = useState("");
     const [teamName, setTeamName] = useState();
 
+    // https://icons8.com/icon/9777/swimming
     const swimmerSilhouette = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAACVklEQVR4nO2Xz0sVURTHP6YWJhREC6mgFgZBLWrRIghc6EJJi9oE7qQ20SJbFUQRlZELd+VaXCjVf1CYmoXVIovoJ4QRJoH9oJ4VBvXiwnlwGebO3Jn33vhenA+c1Zxz7/neH2fOBUVRFEVRFEVZBtqBSeAnMA40UYUCpoF8wB4DdVQBbQ4Btp2iwgU8iBFQMHPMmqliAXnLJoAaKoB9wMMUAmw74jnXARG+KGaKRlexArYA9z0TzQEDQCuwFPL9i0cVuxIxfl8xQiY9BCwA54B1Vtwlh++NmJ3Ix1hnWiGLEYO+B04AjSFxDcBbR9x+x1wTHkLupBVyO2Swl0APsDImtsORzBywJsQ/5yHke1ohm4FbwA9gCjgErEgQf9OR0GDWQophLTDkSOgPsDfgP+4hZIyM6QbmY5J6AayyYro8hJjfQCZskwvp+2+5EIjvi/C9mIWA1cBlx/8jyoz/9sBYnbIYObGxrHbC1P93CQXYdp1lZlNEVUpin0qRzBTwBNiRIMZc0DPS1eYrRci0DGaS6gXqPbrfVyUSULDfUuF+iX0AnsmROw20+DzOGgO1/g1wOCRwAzBaYgFJ7CswIi/R2ihB7VLXC4FmhfrlyJmd+lbixD4Dw8AxYDewUfqzBlm0XdIGXQVeB2JNYTkuvqHUSfDTMq3qvLQmbSne8VuB88CsNd5H4GRcz9cik84VkfhfWRSzs3sS9mguauXoz1jzmHsei3me7gSOAteAu8Bz63IuSdUxLfsjOcdngYPAespHjTwHzHW4V8Z5FEVRFEVRFP4T/gFjM9Bec0iyfAAAAABJRU5ErkJggg=="
 
     function toggleEditMode() {
@@ -249,8 +250,10 @@ function MyTeam() {
         <div className="table-container">
             {userId ? (
                 <div>
+                    <div className="running-out-of-names">
                     <h1>Current user: {userName}</h1>
                     <h2>Current team: {teamName}</h2>
+                    </div>
                     <div>
 
                         {editMode ? (

@@ -13,19 +13,6 @@ from config import app, db, api
 # Add your model imports
 from models import Swimmer, Team, Event, Time, User
 
-# Views go here!
-
-#Current routes:
-# Get/Post Swimmers
-# Get/Patch/Delete Swimmers by ID
-# Get/Post Teams
-# Get/Patch/Delete Teams by ID
-# Get Times
-# Get TimesBySwimmerId
-# Get/Patch TimesById
-# Get/Post Users
-# Get/Patch/Delete Users by ID
-
 
 @app.route('/')
 def index():

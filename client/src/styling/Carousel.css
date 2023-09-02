@@ -1,6 +1,10 @@
 .carousel-image {
     height: 400px;
-    width: 400px;
+    width: 500px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    
   }
   
   .carousel-component-container {
@@ -38,7 +42,7 @@
   }
   
   .carousel-item-text {
-    font-size: 1.15rem;
+    font-size: 24px;
     font-family: 'Roboto', sans-serif;
     margin: 40px 0 40px 0;
     padding: 0 20px 0 20px;
