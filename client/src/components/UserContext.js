@@ -14,9 +14,10 @@ export function UserProvider({children}) {
                 const response = await fetch("/whodat");
                 if (response.ok) {
                     const data = await response.json();
+                    console.log(data)
                     setUserId(data.id);
                     setUserTeamId(data.team_id);
-                    setUserName(data.first_name);;
+                    setUserName(data.first_name);
                 } else {
                     console.log("Error: ", response)
                 }
