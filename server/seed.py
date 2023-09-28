@@ -18,8 +18,15 @@ def seed_users():
         password_hash="password1",
         team_id=4 
     )
+    guest = User(
+        first_name = "Guest",
+        last_name = "McGuest",
+        username = "Guest",
+        password_hash = "password1",
+        team_id = 4
+    )
 
-    db.session.add(user)
+    db.session.add(user, guest)
     db.session.commit()
 
 def create_swimmers(teams):

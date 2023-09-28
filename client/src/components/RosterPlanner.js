@@ -4,7 +4,7 @@ import { useUser } from "./UserContext";
 
 function RosterPlanner() {
 
-    const {userId, userTeamId, userTeamName} = useUser();
+    const {userId, userTeamId, userName, userTeamName} = useUser();
 
     const [allTeams, setAllTeams] = useState([])
     const [teamName, setTeamName] = useState()
@@ -26,9 +26,6 @@ function RosterPlanner() {
     const [free500, setFree500] = useState({...initialIndividualState})
     const [back100, setBack100] = useState({...initialIndividualState})
     const [breast100, setBreast100] = useState({...initialIndividualState})
-
-    // const [userScoreAfterMedleys, setUserScoreAfterMedleys] = useState()
-    // const [userScore200Free, setUserScore200Free] = useState()
 
     const initialRelayState = {
         1: { swimmerName: "", time: "" },
@@ -450,10 +447,6 @@ function RosterPlanner() {
         })
     }
 
-    // function calculateTotalScore(...numbers) {
-    //     return numbers.reduce((total, num) => total + num, 0);
-    // }
-
     useEffect(() => { //user score
         const ourTotalScore = 
             parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[4])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[5])) + parseInt(scoreIndividuals(sortAndPlaceIndividuals(free200)[6])) +
@@ -489,7 +482,7 @@ function RosterPlanner() {
     return (
         <div className="table-container">
             <div className="roster-master">
-            <h1>Current User: {userId}</h1>
+            <h1>Current User: {userName}</h1>
             <h2>Mocking as: {userTeamId}</h2>
             <h3>Mock against: 
                 <select className="opp-select" onChange={(e) => getOppTeam(e.target.value)}>
@@ -506,12 +499,12 @@ function RosterPlanner() {
             <div className="score-cards">
             {!loading && (
             <div className="our-score">
-                {ourScore}
+                {ourScore} points
             </div>
                 )}
                 {!loading && (
             <div className="their-score">
-                {theirScore}
+                {theirScore} points
             </div>
                 )}
             </div>

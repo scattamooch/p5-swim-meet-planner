@@ -1,12 +1,64 @@
 .greeting-div {
-    text-align: center;
-    margin-bottom: 20px;
-    background-color: #ffffffb9; 
-    border: 2px solid aqua; 
-    border-radius: 10px; 
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
-    padding: 20px; 
-    max-width: 400px; 
-    margin-top: 20px;
-    margin-left: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+  background-color: #ffffffb9;
+  border: 2px solid aqua;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: inline-block;
+  /* Set to inline-block to adapt to the content width */
+  max-width: 100%;
+  /* Set a maximum width if needed */
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.instructions {
+  text-align: center;
+  margin-bottom: 20px;
+  background-color: #ffffffb9;
+  border: 2px solid aqua;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px;
+  margin-left: 20px;
+  position: absolute;
+  top: 57%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+}
+
+.instructions-list {
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+.coming-soon {
+  max-width: 20%;
+  margin-bottom: 20px;
+  background-color: #ffffffb9;
+  border: 2px solid aqua;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px;
+  margin-left: 20px;
+  position: absolute;
+  top: 75%;
+  left: 11%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+}
+
+.works-in-progress {
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+.description {
+  margin-left: 30px;
+  margin-top: 0;
 }
